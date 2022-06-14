@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import '../widget/custom_button.dart';
 import '../widget/custom_text_form_field.dart';
 
 class SignInPage extends StatelessWidget {
@@ -45,7 +46,16 @@ class SignInPage extends StatelessWidget {
       }
 
       Widget submitButton() {
-        return Container();
+        return CustomButton(
+          buttonText: 'Sign In',
+          widthButton: 220,
+          margin: EdgeInsets.only(
+            top: 20,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, '/main');
+          },
+        );
       }
 
       return Container(
