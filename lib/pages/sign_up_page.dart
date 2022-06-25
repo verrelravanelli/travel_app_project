@@ -19,7 +19,7 @@ class SignUpPage extends StatelessWidget {
           top: 20,
         ),
         child: Text(
-          'Join us and get\nyour next journey',
+          'Join us and travel\nacross the world',
           style: blackTextStyle.copyWith(
             fontSize: 24,
             fontWeight: semiBold,
