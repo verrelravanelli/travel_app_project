@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
+import 'package:proyek_ambw_kel15/services/auth_service.dart';
+import 'package:proyek_ambw_kel15/services/user_service.dart';
 
 import '../theme.dart';
 import '../widget/destination_card.dart';
@@ -11,6 +15,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late User user;
+  late UserModel loggedUser =
+      UserModel(id: "", email: "", name: "", balance: 0);
+  @override
+  void initState() {
+    // TODO: implement initState
+    user = FirebaseAuth.instance.currentUser!;
+    getCurrentUser();
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    loggedUser = await UserService().getUserByID(user.uid);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -27,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Howdy,\n${"John Doe"}',
+                    'Howdy,\n${loggedUser.name}',
                     style: blackTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semiBold,

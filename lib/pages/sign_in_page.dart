@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
+import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import '../theme.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text_form_field.dart';
@@ -9,6 +12,8 @@ class SignInPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController(text: '');
   final TextEditingController passwordController =
       TextEditingController(text: '');
+
+  late UserModel tmpUser = UserModel(id: "", email: "", name: "", balance: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,7 @@ class SignInPage extends StatelessWidget {
             top: 20,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/main');
+            signIn(context);
           },
         );
       }
@@ -113,5 +118,21 @@ class SignInPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void signIn(context) async {
+    if (emailController.text == "" && passwordController.text == "") {
+      Fluttertoast.showToast(msg: "Input Email & Password!");
+    } else if (emailController.text == "") {
+      Fluttertoast.showToast(msg: "Input Email");
+    } else if (passwordController.text == "") {
+      Fluttertoast.showToast(msg: "Input Password!");
+    } else {
+      tmpUser = await AuthService.signIn(
+          email: emailController.text, password: passwordController.text);
+      if (tmpUser.id != "") {
+        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+      }
+    }
   }
 }

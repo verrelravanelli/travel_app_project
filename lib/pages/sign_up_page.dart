@@ -62,24 +62,34 @@ class SignUpPage extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
               onPressed: () {
-                //Panggil Fungsi AuthService SignUp
-                AuthService.signUp(
-                    email: emailController.text,
-                    password: passwordController.text,
-                    name: nameController.text);
+                if (emailController.text != "" &&
+                    passwordController.text != "" &&
+                    nameController.text != "") {
+                  //Panggil Fungsi AuthService SignUp
+                  AuthService.signUp(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      name: nameController.text);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Account Created"),
-                  ),
-                );
-                Future.delayed(
-                  Duration(seconds: 3),
-                  () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/sign-in', (route) => false);
-                  },
-                );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Account Created"),
+                    ),
+                  );
+                  Future.delayed(
+                    Duration(seconds: 2),
+                    () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/sign-in', (route) => false);
+                    },
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Isi informasi dengan lengkap!"),
+                    ),
+                  );
+                }
               },
               child: Text('Sign Up')),
         );
