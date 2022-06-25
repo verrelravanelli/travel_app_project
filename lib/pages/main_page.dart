@@ -48,19 +48,19 @@ class MainPage extends StatelessWidget {
             children: [
               CustomButtonNavigationItem(
                 index: 0,
-                imageUrl: 'assets/icon_plane.png',
+                imageUrl: 'assets/icon_star.png',
               ),
               CustomButtonNavigationItem(
                 index: 1,
-                imageUrl: 'assets/icon_plane.png',
+                imageUrl: 'assets/icon_star.png',
               ),
               CustomButtonNavigationItem(
                 index: 2,
-                imageUrl: 'assets/icon_plane.png',
+                imageUrl: 'assets/icon_star.png',
               ),
               CustomButtonNavigationItem(
                 index: 3,
-                imageUrl: 'assets/icon_plane.png',
+                imageUrl: 'assets/icon_star.png',
               ),
             ],
           ),
