@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/services/auth_service.dart';
+import 'package:proyek_ambw_kel15/services/user_service.dart';
 import '../theme.dart';
 import '../widget/custom_text_form_field.dart';
 
@@ -9,7 +11,6 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController(text: '');
   final TextEditingController passwordController =
       TextEditingController(text: '');
-  final TextEditingController hobbyController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -54,21 +55,34 @@ class SignUpPage extends StatelessWidget {
         );
       }
 
-      Widget hobbyInput() {
-        return CustomTextFormField(
-          title: 'Hobby',
-          hintText: 'Your hobby',
-          controller: hobbyController,
-        );
-      }
-
       Widget submitButton() {
-        return ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/sign-in', (route) => false);
-            },
-            child: Text('Sign Up'));
+        return Container(
+          margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+          width: 200,
+          height: 50,
+          child: ElevatedButton(
+              onPressed: () {
+                //Panggil Fungsi AuthService SignUp
+                AuthService.signUp(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    name: nameController.text);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Account Created"),
+                  ),
+                );
+                Future.delayed(
+                  Duration(seconds: 3),
+                  () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/sign-in', (route) => false);
+                  },
+                );
+              },
+              child: Text('Sign Up')),
+        );
       }
 
       return Container(
@@ -83,7 +97,6 @@ class SignUpPage extends StatelessWidget {
             nameInput(),
             emailInput(),
             passwordInput(),
-            hobbyInput(),
             submitButton(),
           ],
         ),
