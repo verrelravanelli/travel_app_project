@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "536472079677",
+    "project_id": "proyek-ambw-kelompok-15",
+    "storage_bucket": "proyek-ambw-kelompok-15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536472079677:android:4613caf7ffc2c70d184954",
+        "android_client_info": {
+          "package_name": "com.example.proyek_ambw_kel15"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536472079677-5eskpp37petef04vtql1h3cle72rqfd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcHO71NWzo5GCWnL-_CSshMh4rW-HcxR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536472079677-5eskpp37petef04vtql1h3cle72rqfd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
