@@ -4,6 +4,7 @@ import 'package:proyek_ambw_kel15/services/user_service.dart';
 import '../theme.dart';
 import '../widget/custom_text_form_field.dart';
 
+// ******** BELOM ADA VALID EMAIL CHECKER!
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
 

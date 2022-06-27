@@ -339,7 +339,7 @@ class ChooseSeatPage extends StatelessWidget {
                       symbol: 'IDR ',
                       decimalDigits: 0,
                     ).format(
-                      "1000000",
+                      1000000,
                     ),
                     style: purpleTextStyle.copyWith(
                       fontSize: 16,
