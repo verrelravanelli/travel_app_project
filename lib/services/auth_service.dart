@@ -42,4 +42,11 @@ class AuthService {
       throw e;
     }
   }
+
+  static Future<void> signOut() async {
+    await auth
+        .signOut()
+        .whenComplete(() => print("Berhasil Logout"))
+        .catchError((e) => print(e.toString()));
+  }
 }

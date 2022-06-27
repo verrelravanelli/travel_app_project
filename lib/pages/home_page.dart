@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   void getCurrentUser() async {
     // ******** NOTE
     //BESOK BESOK COBA FETCH DATA USER WAKTU DI MAIN PAGE
+    // KARNA KALO BOTTOM NAVBAR NYA DI PENCET KENCANG BETUL ERROR SET STATENYA LA BANG
     loggedUser = await UserService().getUserByID(user.uid);
     setState(() {});
   }

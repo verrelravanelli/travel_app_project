@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import '../theme.dart';
 import '../widget/custom_button.dart';
 
@@ -10,7 +11,11 @@ class SettingPage extends StatelessWidget {
     return Center(
       child: CustomButton(
         buttonText: 'Sign Out',
-        onPressed: () {},
+        onPressed: () {
+          AuthService.signOut();
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/sign-in', (route) => false);
+        },
         widthButton: 220,
       ),
     );
