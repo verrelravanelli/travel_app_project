@@ -1,18 +1,15 @@
 // import 'package:airplane/models/destination_model.dart';
 // import 'package:airplane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 
 import '../theme.dart';
 
 class DestinationCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String subtitle;
-  const DestinationCard({
+  final DestinationModel destinations;
+  const DestinationCard(
+    this.destinations, {
     Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.image,
   }) : super(key: key);
 
   @override
@@ -20,12 +17,12 @@ class DestinationCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: 200,
+        width: 180,
         height: 323,
         margin: EdgeInsets.only(
           left: defaultMargin,
         ),
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(defaultRadius),
           color: kWhiteColor,
@@ -35,18 +32,16 @@ class DestinationCard extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 180,
               height: 220,
               margin: EdgeInsets.only(
-                bottom: 20,
+                bottom: 15,
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultRadius),
-                // image: DecorationImage(
-                //   image: NetworkImage(
-
-                //   ),
-                // ),
+                image: DecorationImage(
+                  image: NetworkImage(destinations.imageUrl),
+                ),
+                color: Colors.black12,
               ),
               child: Align(
                 alignment: Alignment.topRight,
@@ -70,6 +65,7 @@ class DestinationCard extends StatelessWidget {
                         height: 20,
                         margin: EdgeInsets.only(
                           right: 2,
+                          top: 4,
                         ),
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -79,10 +75,16 @@ class DestinationCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        "4.5",
-                        style: blackTextStyle.copyWith(
-                          fontWeight: medium,
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: Text(
+                          destinations.rating.toString(),
+                          style: blackTextStyle.copyWith(
+                            fontWeight: medium,
+                          ),
                         ),
                       ),
                     ],
@@ -96,7 +98,7 @@ class DestinationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Paris",
+                    destinations.name,
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: medium,
@@ -106,7 +108,7 @@ class DestinationCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "France",
+                    destinations.city,
                     style: greyTextStyle.copyWith(
                       fontWeight: light,
                     ),

@@ -8,8 +8,22 @@ import '../theme.dart';
 import '../widget/custom_button_navigation.dart';
 import 'home_page.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int _selectedNavbar = 0;
+
+  void _changeSelectedNavBar(int index) {
+    setState(() {
+      _selectedNavbar = index;
+      print("Selected index : {$_selectedNavbar}");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +62,19 @@ class MainPage extends StatelessWidget {
             children: [
               CustomButtonNavigationItem(
                 index: 0,
-                imageUrl: 'assets/icon_star.png',
+                imageUrl: 'assets/icon_home.png',
               ),
               CustomButtonNavigationItem(
                 index: 1,
-                imageUrl: 'assets/icon_star.png',
+                imageUrl: 'assets/icon_transaction.png',
               ),
               CustomButtonNavigationItem(
                 index: 2,
-                imageUrl: 'assets/icon_star.png',
+                imageUrl: 'assets/icon_wallet.png',
               ),
               CustomButtonNavigationItem(
                 index: 3,
-                imageUrl: 'assets/icon_star.png',
+                imageUrl: 'assets/icon_setting.png',
               ),
             ],
           ),
@@ -72,9 +86,34 @@ class MainPage extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       body: Stack(
         children: [
-          buildContent(0),
-          customBottomNavigation(),
+          buildContent(_selectedNavbar),
+          //customBottomNavigation(),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: "Transaction",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet),
+            label: "Wallet",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Setting",
+          ),
+        ],
+        currentIndex: _selectedNavbar,
+        selectedItemColor: kPrimaryColor,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        onTap: _changeSelectedNavBar,
       ),
     );
   }

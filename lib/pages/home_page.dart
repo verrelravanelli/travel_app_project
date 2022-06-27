@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
+import 'package:proyek_ambw_kel15/services/destination_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
 
 import '../theme.dart';
@@ -47,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Howdy,\n${loggedUser.name}',
+                    'Welcome,\n${loggedUser.name}',
                     style: blackTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semiBold,
@@ -58,23 +61,13 @@ class _HomePageState extends State<HomePage> {
                     height: 6,
                   ),
                   Text(
-                    'Where to fly today?',
+                    'Where to travel today?',
                     style: greyTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: light,
                     ),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage('assets/foto_paris.jpg'),
-                ),
               ),
             ),
           ],
@@ -87,73 +80,94 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.only(
           top: 10,
         ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                DestinationCard(
-                  title: 'London',
-                  subtitle: 'United Kingdom',
-                  image: 'assets/foto_paris.jpg',
-                )
-              ]),
+        height: 323,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: DestinationService.fetchDataDestinations(),
+          builder: (context, snapshots) {
+            if (snapshots.hasError) {
+              return Text("ERROR");
+            } else if (snapshots.hasData || snapshots.data != null) {
+              return ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot dsData = snapshots.data!.docs[index];
+                  DestinationModel destinationData = DestinationModel(
+                      id: dsData['id'],
+                      name: dsData['name'],
+                      city: dsData['city'],
+                      imageUrl: dsData['imageUrl'],
+                      rating: dsData['rating'],
+                      price: dsData['price']);
+                  return DestinationCard(destinationData);
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  width: 0,
+                ),
+                itemCount: snapshots.data!.docs.length,
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
+              ),
+            );
+          },
         ),
       );
     }
 
-    Widget newDestinations() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 15,
-          left: defaultMargin,
-          right: defaultMargin,
-          bottom: 90,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'New This Year',
-              style: blackTextStyle.copyWith(
-                fontSize: 18,
-                fontWeight: semiBold,
-              ),
-            ),
-            Column(
-              children: [
-                DestinationCard(
-                  title: 'Paris',
-                  subtitle: 'France',
-                  image: 'assets/foto_paris.jpg',
-                ),
-                DestinationCard(
-                  title: 'Rome',
-                  subtitle: 'Italy',
-                  image: 'assets/foto_paris.jpg',
-                ),
-                DestinationCard(
-                  title: 'Berlin',
-                  subtitle: 'Germany',
-                  image: 'assets/foto_paris.jpg',
-                ),
-                DestinationCard(
-                  title: 'Madrid',
-                  subtitle: 'Spain',
-                  image: 'assets/foto_paris.jpg',
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
+    // Widget newDestinations() {
+    //   return Container(
+    //     margin: EdgeInsets.only(
+    //       top: 15,
+    //       left: defaultMargin,
+    //       right: defaultMargin,
+    //       bottom: 90,
+    //     ),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           'New This Year',
+    //           style: blackTextStyle.copyWith(
+    //             fontSize: 18,
+    //             fontWeight: semiBold,
+    //           ),
+    //         ),
+    //         Column(
+    //           children: [
+    //             DestinationCard(
+    //               title: 'Paris',
+    //               subtitle: 'France',
+    //               image: 'assets/foto_paris.jpg',
+    //             ),
+    //             DestinationCard(
+    //               title: 'Rome',
+    //               subtitle: 'Italy',
+    //               image: 'assets/foto_paris.jpg',
+    //             ),
+    //             DestinationCard(
+    //               title: 'Berlin',
+    //               subtitle: 'Germany',
+    //               image: 'assets/foto_paris.jpg',
+    //             ),
+    //             DestinationCard(
+    //               title: 'Madrid',
+    //               subtitle: 'Spain',
+    //               image: 'assets/foto_paris.jpg',
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     return ListView(
       children: [
         header(),
         popularDestinations(),
-        newDestinations(),
+        //newDestinations(),
       ],
     );
   }
