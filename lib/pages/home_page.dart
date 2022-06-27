@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       name: dsData['name'],
                       city: dsData['city'],
                       imageUrl: dsData['imageUrl'],
-                      rating: dsData['rating'],
+                      rating: double.parse(dsData['rating'].toString()),
                       price: dsData['price']);
                   return DestinationCard(destinationData);
                 },

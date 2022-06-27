@@ -2,6 +2,7 @@
 // import 'package:airplane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
+import 'package:proyek_ambw_kel15/pages/detail_page.dart';
 
 import '../theme.dart';
 
@@ -15,7 +16,14 @@ class DestinationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(destinations),
+          ),
+        );
+      },
       child: Container(
         width: 180,
         height: 323,
@@ -39,8 +47,8 @@ class DestinationCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultRadius),
                 image: DecorationImage(
-                  image: NetworkImage(destinations.imageUrl),
-                ),
+                    image: NetworkImage(destinations.imageUrl),
+                    fit: BoxFit.fill),
                 color: Colors.black12,
               ),
               child: Align(

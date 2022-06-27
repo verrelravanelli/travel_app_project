@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/DestinationModel.dart';
 import '../theme.dart';
 import '../widget/custom_button.dart';
 import '../widget/interest_item_detail_page.dart';
@@ -8,7 +9,8 @@ import '../widget/photo_item_detail_page.dart';
 import 'choose_seat_page.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final DestinationModel destinations;
+  const DetailPage(this.destinations, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,7 @@ class DetailPage extends StatelessWidget {
         height: 450,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-              'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-            ),
+            image: NetworkImage(destinations.imageUrl),
             fit: BoxFit.cover,
           ),
         ),
@@ -55,21 +55,6 @@ class DetailPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Note : EMLBLEM
-            Container(
-              margin: EdgeInsets.only(
-                top: 30,
-              ),
-              width: 108,
-              height: 24,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/icon_emblem.png',
-                  ),
-                ),
-              ),
-            ),
             // Note : Title
             Container(
               margin: EdgeInsets.only(
@@ -82,7 +67,7 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name',
+                          destinations.name,
                           overflow: TextOverflow.ellipsis,
                           style: whiteTextStyle.copyWith(
                             fontSize: 24,
@@ -90,7 +75,7 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'John Doe',
+                          destinations.city,
                           style: whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: light,
@@ -118,7 +103,7 @@ class DetailPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '4.5',
+                        destinations.rating.toString(),
                         style: whiteTextStyle.copyWith(
                           fontWeight: bold,
                           fontSize: 18,
@@ -167,67 +152,67 @@ class DetailPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  // Note : PHOTOS
-                  Text(
-                    'Photos',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: [
-                      PhotoItemDetailPage(
-                        imageURL: 'assets/image_photo1.png',
-                      ),
-                      PhotoItemDetailPage(
-                        imageURL: 'assets/image_photo2.png',
-                      ),
-                      PhotoItemDetailPage(
-                        imageURL: 'assets/image_photo3.png',
-                      ),
-                    ],
-                  ),
-                  // Note : Interest
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Interest',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: [
-                      InterestItemDetailPage(
-                        name: 'Kids Park',
-                      ),
-                      InterestItemDetailPage(
-                        name: 'Honor Bridge',
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      InterestItemDetailPage(
-                        name: 'City Museum',
-                      ),
-                      InterestItemDetailPage(
-                        name: 'Central Mall',
-                      ),
-                    ],
-                  ),
+                  // // Note : PHOTOS
+                  // Text(
+                  //   'Photos',
+                  //   style: blackTextStyle.copyWith(
+                  //     fontSize: 16,
+                  //     fontWeight: semiBold,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 6,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     PhotoItemDetailPage(
+                  //       imageURL: 'assets/image_photo1.png',
+                  //     ),
+                  //     PhotoItemDetailPage(
+                  //       imageURL: 'assets/image_photo2.png',
+                  //     ),
+                  //     PhotoItemDetailPage(
+                  //       imageURL: 'assets/image_photo3.png',
+                  //     ),
+                  //   ],
+                  // ),
+                  // // Note : Interest
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Text(
+                  //   'Interest',
+                  //   style: blackTextStyle.copyWith(
+                  //     fontSize: 16,
+                  //     fontWeight: semiBold,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 6,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     InterestItemDetailPage(
+                  //       name: 'Kids Park',
+                  //     ),
+                  //     InterestItemDetailPage(
+                  //       name: 'Honor Bridge',
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     InterestItemDetailPage(
+                  //       name: 'City Museum',
+                  //     ),
+                  //     InterestItemDetailPage(
+                  //       name: 'Central Mall',
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -250,7 +235,7 @@ class DetailPage extends StatelessWidget {
                             symbol: 'IDR ',
                             decimalDigits: 0,
                           ).format(
-                            1000000,
+                            destinations.price,
                           ),
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
