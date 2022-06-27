@@ -28,4 +28,13 @@ class UserService {
       throw e;
     }
   }
+
+  Future<void> topUpWallet({required UserModel user}) async {
+    DocumentReference docRef = collectionRef.doc(user.id);
+
+    await docRef
+        .update({"balance": user.balance})
+        .whenComplete(() => print("Data Berhasil di Update"))
+        .catchError((e) => print(e.toString()));
+  }
 }

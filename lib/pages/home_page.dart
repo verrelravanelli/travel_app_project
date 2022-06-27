@@ -30,6 +30,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getCurrentUser() async {
+    // ******** NOTE
+    //BESOK BESOK COBA FETCH DATA USER WAKTU DI MAIN PAGE
     loggedUser = await UserService().getUserByID(user.uid);
     setState(() {});
   }
@@ -116,58 +118,58 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    // Widget newDestinations() {
-    //   return Container(
-    //     margin: EdgeInsets.only(
-    //       top: 15,
-    //       left: defaultMargin,
-    //       right: defaultMargin,
-    //       bottom: 90,
-    //     ),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           'New This Year',
-    //           style: blackTextStyle.copyWith(
-    //             fontSize: 18,
-    //             fontWeight: semiBold,
-    //           ),
-    //         ),
-    //         Column(
-    //           children: [
-    //             DestinationCard(
-    //               title: 'Paris',
-    //               subtitle: 'France',
-    //               image: 'assets/foto_paris.jpg',
-    //             ),
-    //             DestinationCard(
-    //               title: 'Rome',
-    //               subtitle: 'Italy',
-    //               image: 'assets/foto_paris.jpg',
-    //             ),
-    //             DestinationCard(
-    //               title: 'Berlin',
-    //               subtitle: 'Germany',
-    //               image: 'assets/foto_paris.jpg',
-    //             ),
-    //             DestinationCard(
-    //               title: 'Madrid',
-    //               subtitle: 'Spain',
-    //               image: 'assets/foto_paris.jpg',
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
+    Widget newDestinations() {
+      return Container(
+        margin: EdgeInsets.only(
+          top: 15,
+          left: defaultMargin,
+          right: defaultMargin,
+          bottom: 90,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'New This Year',
+              style: blackTextStyle.copyWith(
+                fontSize: 18,
+                fontWeight: semiBold,
+              ),
+            ),
+            // Column(
+            //   children: [
+            //     DestinationCard(
+            //       title: 'Paris',
+            //       subtitle: 'France',
+            //       image: 'assets/foto_paris.jpg',
+            //     ),
+            //     DestinationCard(
+            //       title: 'Rome',
+            //       subtitle: 'Italy',
+            //       image: 'assets/foto_paris.jpg',
+            //     ),
+            //     DestinationCard(
+            //       title: 'Berlin',
+            //       subtitle: 'Germany',
+            //       image: 'assets/foto_paris.jpg',
+            //     ),
+            //     DestinationCard(
+            //       title: 'Madrid',
+            //       subtitle: 'Spain',
+            //       image: 'assets/foto_paris.jpg',
+            //     ),
+            //   ],
+            // ),
+          ],
+        ),
+      );
+    }
 
     return ListView(
       children: [
         header(),
         popularDestinations(),
-        //newDestinations(),
+        newDestinations(),
       ],
     );
   }

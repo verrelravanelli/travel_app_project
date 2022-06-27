@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyek_ambw_kel15/pages/setting_page.dart';
 import 'package:proyek_ambw_kel15/pages/transaction_page.dart';
 import 'package:proyek_ambw_kel15/pages/wallet_page.dart';
-
-import '../models/UserModel.dart';
 import '../theme.dart';
 import '../widget/custom_button_navigation.dart';
 import 'home_page.dart';

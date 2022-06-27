@@ -1,9 +1,45 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../models/UserModel.dart';
+import '../services/user_service.dart';
 import '../theme.dart';
 
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
   const WalletPage({Key? key}) : super(key: key);
+
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
+  final TextEditingController topup = TextEditingController();
+  late User user;
+  late UserModel loggedUser =
+      UserModel(id: "", email: "", name: "", balance: 0);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    user = FirebaseAuth.instance.currentUser!;
+    getCurrentUser();
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    loggedUser = await UserService().getUserByID(user.uid);
+    setState(() {});
+  }
+
+  void topUpBalance() async {
+    var tempBalance = loggedUser.balance + int.parse(topup.text);
+    UserModel dtUser = UserModel(
+        id: loggedUser.id,
+        email: loggedUser.email,
+        name: loggedUser.name,
+        balance: tempBalance);
+    await UserService().topUpWallet(user: dtUser);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +48,12 @@ class WalletPage extends StatelessWidget {
         width: 300,
         height: 211,
         padding: EdgeInsets.all(defaultMargin),
-        // decoration: BoxDecoration(
-        //   image: const DecorationImage(
-        //     image: AssetImage('assets/image_card.png'),
-        //   ),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: kPrimaryColor.withOpacity(0.5),
-        //       blurRadius: 50,
-        //       offset: const Offset(0, 10),
-        //     ),
-        //   ],
-        // ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(defaultRadius),
+          ),
+          color: kPrimaryColor,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,7 +70,7 @@ class WalletPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'John Doe',
+                        loggedUser.name,
                         style: whiteTextStyle.copyWith(
                           fontSize: 20,
                           fontWeight: medium,
@@ -50,21 +80,71 @@ class WalletPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  width: 24,
-                  height: 24,
-                  margin: const EdgeInsets.only(right: 6),
-                  // decoration: const BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage('assets/icon_plane.png'),
-                  //   ),
-                  // ),
-                ),
-                Text(
-                  'Pay',
-                  style: whiteTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: medium,
+                // Container(
+                //   width: 24,
+                //   height: 24,
+                //   margin: const EdgeInsets.only(right: 6),
+                //   decoration: const BoxDecoration(
+                //     image: DecorationImage(
+                //       image: AssetImage('assets/icon_plane.png'),
+                //     ),
+                //   ),
+                // ),
+                // // Text(
+                // //   'Pay',
+                // //   style: whiteTextStyle.copyWith(
+                // //     fontSize: 16,
+                // //     fontWeight: medium,
+                // //   ),
+                // // ),
+                InkWell(
+                  onTap: () {
+                    topup.text = "";
+                    showDialog(
+                      useSafeArea: true,
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: kBackgroundColor,
+                        title: Text("Top Up Balance"),
+                        content: Container(
+                          height: 75,
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: topup,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Input Jumlah Top Up",
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("CANCEL"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                topUpBalance();
+                                getCurrentUser();
+                              });
+                              Navigator.pop(context);
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.add_box,
+                    color: Colors.white,
+                    size: 32,
                   ),
                 ),
               ],
@@ -83,7 +163,9 @@ class WalletPage extends StatelessWidget {
                 locale: 'id',
                 symbol: 'IDR ',
                 decimalDigits: 0,
-              ).format(100000),
+              ).format(
+                loggedUser.balance,
+              ),
               style: whiteTextStyle.copyWith(
                 fontSize: 26,
                 fontWeight: medium,
