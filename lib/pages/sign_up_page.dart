@@ -17,6 +17,23 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController locationController =
       TextEditingController(text: '');
 
+  List<APIModel> tempDataAPI = [];
+
+  void ambilDataAPI() async {
+    APISerivce apiService = APISerivce();
+    Future<List<APIModel>> asiap;
+    asiap = apiService.get(
+      endpoint: '/v1/geo/cities',
+      query: {
+        "limit": "${1}",
+        "countryIds": "ID",
+        "namePrefix": locationController.text,
+        "types": "CITY",
+      },
+    );
+    tempDataAPI = await asiap;
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget title() {
@@ -75,20 +92,22 @@ class SignUpPage extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
               onPressed: () {
-                var temp1;
-                var temp2;
                 if (emailController.text != "" &&
                     passwordController.text != "" &&
                     nameController.text != "" &&
                     locationController.text != "") {
                   //Panggil API Location Service
-                  APISerivce apiService = APISerivce();
-                  Future<List<APIModel>> asiap;
-                  asiap = apiService.get(endpoint: '/v1/geo/cities', query: {
-                    "limit": "${1}",
-                    "namePrefix": locationController.text,
-                    "types": "CITY"
-                  });
+                  ambilDataAPI();
+                  // APISerivce apiService = APISerivce();
+                  // Future<List<APIModel>> asiap;
+                  // asiap = apiService.get(
+                  //   endpoint: '/v1/geo/cities',
+                  //   query: {
+                  //     "limit": "${1}",
+                  //     "namePrefix": locationController.text,
+                  //     "types": "CITY",
+                  //   },
+                  // );
 
                   // FutureBuilder<List<APIModel>>(
                   //     future: asiap,
@@ -104,27 +123,27 @@ class SignUpPage extends StatelessWidget {
                   //     });
 
                   Future.delayed(
-                    Duration(seconds: 10),
+                    Duration(seconds: 3),
                     () {
-                      print(temp1);
                       //Panggil Fungsi AuthService SignUp
                       AuthService.signUp(
                         email: emailController.text,
                         password: passwordController.text,
                         name: nameController.text,
-                        locationid: temp1,
+                        locationid: tempDataAPI[0].wikiDataId,
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Account Created"),
+                          duration: Duration(seconds: 1),
                         ),
                       );
                       Future.delayed(
                         Duration(seconds: 2),
                         () {
                           Navigator.pushNamedAndRemoveUntil(
-                              context, '/sign-in', (route) => false);
+                              context, '/main', (route) => false);
                         },
                       );
                     },
