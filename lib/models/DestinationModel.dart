@@ -5,6 +5,7 @@ class DestinationModel {
   final String imageUrl;
   final double rating;
   final int price;
+  final String about;
 
   DestinationModel({
     required this.id,
@@ -13,6 +14,7 @@ class DestinationModel {
     required this.imageUrl,
     required this.rating,
     required this.price,
+    required this.about,
   });
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class DestinationModel {
       "imageUrl": imageUrl,
       "rating": rating,
       "price": price,
+      "about": about,
     };
   }
 
@@ -34,6 +37,7 @@ class DestinationModel {
       imageUrl: json['imageUrl'],
       rating: json['rating'],
       price: json['price'],
+      about: json['about'],
     );
   }
 }

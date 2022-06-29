@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyek_ambw_kel15/models/APIModel.dart';
+import 'package:proyek_ambw_kel15/services/api_service.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
 import '../theme.dart';
@@ -11,6 +13,8 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController(text: '');
   final TextEditingController emailController = TextEditingController(text: '');
   final TextEditingController passwordController =
+      TextEditingController(text: '');
+  final TextEditingController locationController =
       TextEditingController(text: '');
 
   @override
@@ -56,6 +60,14 @@ class SignUpPage extends StatelessWidget {
         );
       }
 
+      Widget locationInput() {
+        return CustomTextFormField(
+          title: 'Location',
+          hintText: 'Your Location',
+          controller: locationController,
+        );
+      }
+
       Widget submitButton() {
         return Container(
           margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
@@ -63,9 +75,30 @@ class SignUpPage extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
               onPressed: () {
+                var temp1;
+                var temp2;
                 if (emailController.text != "" &&
                     passwordController.text != "" &&
-                    nameController.text != "") {
+                    nameController.text != "" &&
+                    locationController.text != "") {
+                  //Panggil API Location Service
+                  APISerivce apiService = APISerivce();
+                  Future<List<APIModel>> asiap;
+                  asiap = apiService.get(endpoint: '/Cities', query: {
+                    "namePrefix": "${locationController.text}",
+                    "types": "CITY"
+                  });
+                  FutureBuilder<List<APIModel>>(
+                      future: asiap,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<APIModel> dsData = snapshot.data!;
+                          temp1 = dsData[0].wikiDataID;
+                          temp2 = dsData[0].city;
+                        }
+                        return SizedBox();
+                      });
+
                   //Panggil Fungsi AuthService SignUp
                   AuthService.signUp(
                       email: emailController.text,
@@ -108,6 +141,7 @@ class SignUpPage extends StatelessWidget {
             nameInput(),
             emailInput(),
             passwordInput(),
+            locationInput(),
             submitButton(),
           ],
         ),

@@ -95,12 +95,14 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot dsData = snapshots.data!.docs[index];
                   DestinationModel destinationData = DestinationModel(
-                      id: dsData['id'],
-                      name: dsData['name'],
-                      city: dsData['city'],
-                      imageUrl: dsData['imageUrl'],
-                      rating: double.parse(dsData['rating'].toString()),
-                      price: dsData['price']);
+                    id: dsData['id'],
+                    name: dsData['name'],
+                    city: dsData['city'],
+                    imageUrl: dsData['imageUrl'],
+                    rating: double.parse(dsData['rating'].toString()),
+                    price: dsData['price'],
+                    about: dsData['about'],
+                  );
                   return DestinationCard(destinationData);
                 },
                 separatorBuilder: (context, index) => SizedBox(
