@@ -1,7 +1,5 @@
-// import 'package:airplane/cubit/seat_cubit.dart';
 import 'package:flutter/material.dart';
 import '../theme.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SeatItem extends StatelessWidget {
   // Note 0. Available, 1. Selected, 2. Unavailable
@@ -51,7 +49,9 @@ class SeatItem extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (isAvailable) {}
+      },
       child: Container(
         width: 48,
         height: 48,

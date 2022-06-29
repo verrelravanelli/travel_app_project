@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../models/DestinationModel.dart';
@@ -10,7 +11,9 @@ import 'choose_seat_page.dart';
 
 class DetailPage extends StatelessWidget {
   final DestinationModel destinations;
-  const DetailPage(this.destinations, {Key? key}) : super(key: key);
+  DetailPage(this.destinations, {Key? key}) : super(key: key);
+
+  final TextEditingController fromCity = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -153,67 +156,53 @@ class DetailPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  // // Note : PHOTOS
-                  // Text(
-                  //   'Photos',
-                  //   style: blackTextStyle.copyWith(
-                  //     fontSize: 16,
-                  //     fontWeight: semiBold,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 6,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     PhotoItemDetailPage(
-                  //       imageURL: 'assets/image_photo1.png',
-                  //     ),
-                  //     PhotoItemDetailPage(
-                  //       imageURL: 'assets/image_photo2.png',
-                  //     ),
-                  //     PhotoItemDetailPage(
-                  //       imageURL: 'assets/image_photo3.png',
-                  //     ),
-                  //   ],
-                  // ),
-                  // // Note : Interest
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text(
-                  //   'Interest',
-                  //   style: blackTextStyle.copyWith(
-                  //     fontSize: 16,
-                  //     fontWeight: semiBold,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 6,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     InterestItemDetailPage(
-                  //       name: 'Kids Park',
-                  //     ),
-                  //     InterestItemDetailPage(
-                  //       name: 'Honor Bridge',
-                  //     ),
-                  //   ],
-                  // ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     InterestItemDetailPage(
-                  //       name: 'City Museum',
-                  //     ),
-                  //     InterestItemDetailPage(
-                  //       name: 'Central Mall',
-                  //     ),
-                  //   ],
-                  // ),
+                  // Note : From City - To City
+                  Text(
+                    'From City',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: defaultMargin,
+                  ),
+                  TextField(
+                    controller: fromCity,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Input Kota Anda",
+                    ),
+                  ),
+                  SizedBox(
+                    height: defaultMargin,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'To City : ',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        child: Text(
+                          destinations.city,
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(style: BorderStyle.solid),
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -258,12 +247,20 @@ class DetailPage extends StatelessWidget {
                   CustomButton(
                     buttonText: 'Book Now',
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChooseSeatPage(),
-                        ),
-                      );
+                      if (fromCity.text != "") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChooseSeatPage(
+                                destinasi: destinations,
+                                fromCityUser: fromCity.text),
+                          ),
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Input Kota Anda!",
+                            gravity: ToastGravity.CENTER);
+                      }
                     },
                     widthButton: 170,
                   ),

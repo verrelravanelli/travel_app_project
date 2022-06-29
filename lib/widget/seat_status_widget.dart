@@ -16,13 +16,13 @@ class SeatStatusWidget extends StatelessWidget {
           margin: EdgeInsets.only(
             right: 6,
           ),
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage(
-          //       'assets/icon_available.png',
-          //     ),
-          //   ),
-          // ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/icon_available.png',
+              ),
+            ),
+          ),
         ),
         Text(
           'Available',
@@ -36,13 +36,13 @@ class SeatStatusWidget extends StatelessWidget {
             left: 10,
             right: 6,
           ),
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage(
-          //       'assets/icon_selected.png',
-          //     ),
-          //   ),
-          // ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/icon_selected.png',
+              ),
+            ),
+          ),
         ),
         Text(
           'Selected',
@@ -56,13 +56,13 @@ class SeatStatusWidget extends StatelessWidget {
             left: 10,
             right: 6,
           ),
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage(
-          //       'assets/icon_unavailable.png',
-          //     ),
-          //   ),
-          // ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/icon_unavailable.png',
+              ),
+            ),
+          ),
         ),
         Text(
           'Unavailable',

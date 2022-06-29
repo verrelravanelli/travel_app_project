@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 
 import '../theme.dart';
 import '../widget/booking_details_item.dart';
 import '../widget/custom_button.dart';
 
 class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({Key? key}) : super(key: key);
+  //besok ganti ke transactionModel aja
+  final DestinationModel dtDestinations;
+  final String userFromCity;
+  final int price;
+  const CheckoutPage({
+    Key? key,
+    required this.dtDestinations,
+    required this.userFromCity,
+    required this.price,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +46,14 @@ class CheckoutPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'CGK',
+                      'ID',
                       style: blackTextStyle.copyWith(
                         fontSize: 24,
                         fontWeight: semiBold,
                       ),
                     ),
                     Text(
-                      'Tangerang',
+                      userFromCity,
                       style: greyTextStyle.copyWith(
                         fontWeight: light,
                       ),
@@ -54,14 +64,14 @@ class CheckoutPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'TLC',
+                      dtDestinations.id,
                       style: blackTextStyle.copyWith(
                         fontSize: 24,
                         fontWeight: semiBold,
                       ),
                     ),
                     Text(
-                      'Ciliwung',
+                      dtDestinations.city,
                       style: greyTextStyle.copyWith(
                         fontWeight: light,
                       ),
@@ -103,7 +113,7 @@ class CheckoutPage extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+                        dtDestinations.imageUrl,
                       ),
                     ),
                   ),
@@ -113,7 +123,7 @@ class CheckoutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Destination',
+                        dtDestinations.name,
                         style: blackTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: medium,
@@ -123,7 +133,7 @@ class CheckoutPage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Ciliwung',
+                        dtDestinations.city,
                         style: greyTextStyle.copyWith(
                           fontWeight: light,
                         ),
@@ -150,7 +160,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '4.5',
+                      dtDestinations.rating.toString(),
                       style: blackTextStyle.copyWith(
                         fontWeight: medium,
                       ),
@@ -204,7 +214,7 @@ class CheckoutPage extends StatelessWidget {
                 locale: 'id',
                 symbol: 'IDR ',
                 decimalDigits: 0,
-              ).format(100000),
+              ).format(price),
               valueColor: kBlackColor,
             ),
             BookingDetailsItem(
@@ -213,7 +223,7 @@ class CheckoutPage extends StatelessWidget {
                 locale: 'id',
                 symbol: 'IDR ',
                 decimalDigits: 0,
-              ).format(100000),
+              ).format(price),
               valueColor: kPrimaryColor,
             ),
           ],

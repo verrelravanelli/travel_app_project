@@ -28,11 +28,11 @@ class BookingDetailsItem extends StatelessWidget {
             ),
             width: 16,
             height: 16,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/icon_check.png'),
-              ),
-            ),
+            // decoration: BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('assets/icon_check.png'),
+            //   ),
+            // ),
           ),
           Text(
             detailTitle,
