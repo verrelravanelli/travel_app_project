@@ -16,7 +16,7 @@ class _WalletPageState extends State<WalletPage> {
   final TextEditingController topup = TextEditingController();
   late User user;
   late UserModel loggedUser =
-      UserModel(id: "", email: "", name: "", balance: 0);
+      UserModel(id: "", email: "", name: "", balance: 0, locationid: "");
 
   @override
   void initState() {
@@ -37,7 +37,8 @@ class _WalletPageState extends State<WalletPage> {
         id: loggedUser.id,
         email: loggedUser.email,
         name: loggedUser.name,
-        balance: tempBalance);
+        balance: tempBalance,
+        locationid: loggedUser.locationid);
     await UserService().topUpWallet(user: dtUser);
   }
 

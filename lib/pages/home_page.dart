@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late User user;
   late UserModel loggedUser =
-      UserModel(id: "", email: "", name: "", balance: 0);
+      UserModel(id: "", email: "", name: "", balance: 0, locationid: "");
   @override
   void initState() {
     // TODO: implement initState

@@ -19,11 +19,11 @@ class UserService {
       DocumentSnapshot snapshot = await collectionRef.doc(id).get();
 
       return UserModel(
-        id: id,
-        email: snapshot['email'],
-        name: snapshot['name'],
-        balance: snapshot['balance'],
-      );
+          id: id,
+          email: snapshot['email'],
+          name: snapshot['name'],
+          balance: snapshot['balance'],
+          locationid: snapshot['locationid']);
     } catch (e) {
       throw e;
     }

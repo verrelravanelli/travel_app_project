@@ -13,7 +13,8 @@ class SignInPage extends StatelessWidget {
   final TextEditingController passwordController =
       TextEditingController(text: '');
 
-  late UserModel tmpUser = UserModel(id: "", email: "", name: "", balance: 0);
+  late UserModel tmpUser =
+      UserModel(id: "", email: "", name: "", balance: 0, locationid: "");
 
   @override
   Widget build(BuildContext context) {

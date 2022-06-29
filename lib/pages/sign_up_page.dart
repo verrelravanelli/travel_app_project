@@ -84,37 +84,49 @@ class SignUpPage extends StatelessWidget {
                   //Panggil API Location Service
                   APISerivce apiService = APISerivce();
                   Future<List<APIModel>> asiap;
-                  asiap = apiService.get(endpoint: '/Cities', query: {
-                    "namePrefix": "${locationController.text}",
+                  asiap = apiService.get(endpoint: '/v1/geo/cities', query: {
+                    "limit": "${1}",
+                    "namePrefix": locationController.text,
                     "types": "CITY"
                   });
-                  FutureBuilder<List<APIModel>>(
-                      future: asiap,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          List<APIModel> dsData = snapshot.data!;
-                          temp1 = dsData[0].wikiDataID;
-                          temp2 = dsData[0].city;
-                        }
-                        return SizedBox();
-                      });
 
-                  //Panggil Fungsi AuthService SignUp
-                  AuthService.signUp(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      name: nameController.text);
+                  // FutureBuilder<List<APIModel>>(
+                  //     future: asiap,
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         print("masuk");
+                  //         List<APIModel> dsData = snapshot.data!;
+                  //         print(dsData[0].wikiDataId);
+                  //         temp1 = dsData[0].wikiDataId;
+                  //         temp2 = dsData[0].city;
+                  //       }
+                  //       return SizedBox();
+                  //     });
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Account Created"),
-                    ),
-                  );
                   Future.delayed(
-                    Duration(seconds: 2),
+                    Duration(seconds: 10),
                     () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/sign-in', (route) => false);
+                      print(temp1);
+                      //Panggil Fungsi AuthService SignUp
+                      AuthService.signUp(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        name: nameController.text,
+                        locationid: temp1,
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Account Created"),
+                        ),
+                      );
+                      Future.delayed(
+                        Duration(seconds: 2),
+                        () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/sign-in', (route) => false);
+                        },
+                      );
                     },
                   );
                 } else {

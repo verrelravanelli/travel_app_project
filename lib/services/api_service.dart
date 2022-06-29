@@ -13,8 +13,8 @@ class APISerivce {
   //Base headers for response url
   static const Map<String, String> _headers = {
     "content-type": "application/json",
-    "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-    "x-rapidapi-key": _api_key,
+    "X-Rapidapi-Host": "wft-geo-db.p.rapidapi.com",
+    "x-Rapidapi-Key": _api_key,
   };
 
   // Base API request to get response
@@ -32,10 +32,12 @@ class APISerivce {
       List<APIModel> getAllData =
           list.map<APIModel>((json) => APIModel.fromJson(json)).toList();
 
+      for (var i = 0; i < 1; i++) {
+        print(getAllData[i].wikiDataId);
+      }
       return getAllData;
     } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load json data');
+      throw response.statusCode;
     }
   }
 }
