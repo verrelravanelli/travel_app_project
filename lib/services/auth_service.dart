@@ -10,6 +10,7 @@ class AuthService {
     required String password,
     required String name,
     required String locationid,
+    required String city,
   }) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -21,6 +22,7 @@ class AuthService {
         name: name,
         balance: 0,
         locationid: locationid,
+        city: city,
       );
 
       await UserService().tambahData(user: user);

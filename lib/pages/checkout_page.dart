@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
+import 'package:proyek_ambw_kel15/models/TransactionModel.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
+import 'package:proyek_ambw_kel15/services/transaction_service.dart';
+import 'package:proyek_ambw_kel15/services/user_service.dart';
 
 import '../theme.dart';
 import '../widget/booking_details_item.dart';
 import '../widget/custom_button.dart';
 
 class CheckoutPage extends StatelessWidget {
-  //besok ganti ke transactionModel aja
-  final DestinationModel dtDestinations;
-  final String userFromCity;
-  final int price;
+  final UserModel currentUser;
+  final TransactionModel transaksi;
   const CheckoutPage({
     Key? key,
-    required this.dtDestinations,
-    required this.userFromCity,
-    required this.price,
+    required this.currentUser,
+    required this.transaksi,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      userFromCity,
+                      currentUser.city,
                       style: greyTextStyle.copyWith(
                         fontWeight: light,
                       ),
@@ -64,14 +66,14 @@ class CheckoutPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      dtDestinations.id,
+                      transaksi.destination.id,
                       style: blackTextStyle.copyWith(
                         fontSize: 24,
                         fontWeight: semiBold,
                       ),
                     ),
                     Text(
-                      dtDestinations.city,
+                      transaksi.destination.city,
                       style: greyTextStyle.copyWith(
                         fontWeight: light,
                       ),
@@ -113,7 +115,7 @@ class CheckoutPage extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        dtDestinations.imageUrl,
+                        transaksi.destination.imageUrl,
                       ),
                     ),
                   ),
@@ -123,7 +125,7 @@ class CheckoutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dtDestinations.name,
+                        transaksi.destination.name,
                         style: blackTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: medium,
@@ -133,7 +135,7 @@ class CheckoutPage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        dtDestinations.city,
+                        transaksi.destination.city,
                         style: greyTextStyle.copyWith(
                           fontWeight: light,
                         ),
@@ -160,7 +162,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      dtDestinations.rating.toString(),
+                      transaksi.destination.rating.toString(),
                       style: blackTextStyle.copyWith(
                         fontWeight: medium,
                       ),
@@ -185,27 +187,12 @@ class CheckoutPage extends StatelessWidget {
             // Note : Booking Details Item
             BookingDetailsItem(
               detailTitle: 'Traveler',
-              valueText: '2 person',
+              valueText: transaksi.banyakTraveler.toString() + " Person",
               valueColor: kBlackColor,
             ),
             BookingDetailsItem(
               detailTitle: 'Seat',
-              valueText: '1 seat',
-              valueColor: kBlackColor,
-            ),
-            BookingDetailsItem(
-              detailTitle: 'Insurance',
-              valueText: 'YES',
-              valueColor: kBlackColor,
-            ),
-            BookingDetailsItem(
-              detailTitle: 'Refundable',
-              valueText: 'YES',
-              valueColor: kBlackColor,
-            ),
-            BookingDetailsItem(
-              detailTitle: 'VAT',
-              valueText: 'YES',
+              valueText: transaksi.selectedSeats,
               valueColor: kBlackColor,
             ),
             BookingDetailsItem(
@@ -214,7 +201,12 @@ class CheckoutPage extends StatelessWidget {
                 locale: 'id',
                 symbol: 'IDR ',
                 decimalDigits: 0,
-              ).format(price),
+              ).format(transaksi.price),
+              valueColor: kBlackColor,
+            ),
+            BookingDetailsItem(
+              detailTitle: 'TAX',
+              valueText: '${transaksi.tax}%',
               valueColor: kBlackColor,
             ),
             BookingDetailsItem(
@@ -223,7 +215,7 @@ class CheckoutPage extends StatelessWidget {
                 locale: 'id',
                 symbol: 'IDR ',
                 decimalDigits: 0,
-              ).format(price),
+              ).format(transaksi.grandTotal),
               valueColor: kPrimaryColor,
             ),
           ],
@@ -313,7 +305,7 @@ class CheckoutPage extends StatelessWidget {
                             locale: 'id',
                             symbol: 'IDR ',
                             decimalDigits: 0,
-                          ).format(100000),
+                          ).format(currentUser.balance),
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: medium,
@@ -343,7 +335,32 @@ class CheckoutPage extends StatelessWidget {
     Widget payButton() {
       return CustomButton(
         buttonText: 'Pay Now',
-        onPressed: () {},
+        onPressed: () {
+          if (currentUser.balance < transaksi.price) {
+            Fluttertoast.showToast(
+                msg: "Saldo Tidak Cukup!", gravity: ToastGravity.CENTER);
+          } else {
+            TransactionService().tambahData(
+              user: currentUser,
+              transaksi: transaksi,
+            );
+            int tempSaldoAkhir = currentUser.balance - transaksi.grandTotal;
+            UserService().potongSaldo(
+              user: currentUser,
+              saldoAkhirUser: tempSaldoAkhir,
+            );
+
+            Fluttertoast.showToast(
+                msg: "Success Checkout", gravity: ToastGravity.SNACKBAR);
+            Future.delayed(
+              Duration(seconds: 3),
+              () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/success', (route) => false);
+              },
+            );
+          }
+        },
         margin: EdgeInsets.only(
           top: 30,
         ),

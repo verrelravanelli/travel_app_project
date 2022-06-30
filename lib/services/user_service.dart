@@ -19,11 +19,13 @@ class UserService {
       DocumentSnapshot snapshot = await collectionRef.doc(id).get();
 
       return UserModel(
-          id: id,
-          email: snapshot['email'],
-          name: snapshot['name'],
-          balance: snapshot['balance'],
-          locationid: snapshot['locationid']);
+        id: id,
+        email: snapshot['email'],
+        name: snapshot['name'],
+        balance: snapshot['balance'],
+        locationid: snapshot['locationid'],
+        city: snapshot['city'],
+      );
     } catch (e) {
       throw e;
     }
@@ -34,6 +36,16 @@ class UserService {
 
     await docRef
         .update({"balance": user.balance})
+        .whenComplete(() => print("Data Berhasil di Update"))
+        .catchError((e) => print(e.toString()));
+  }
+
+  Future<void> potongSaldo(
+      {required UserModel user, required int saldoAkhirUser}) async {
+    DocumentReference docRef = collectionRef.doc(user.id);
+
+    await docRef
+        .update({"balance": saldoAkhirUser})
         .whenComplete(() => print("Data Berhasil di Update"))
         .catchError((e) => print(e.toString()));
   }

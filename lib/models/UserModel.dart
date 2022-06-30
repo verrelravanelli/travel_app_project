@@ -4,13 +4,16 @@ class UserModel {
   final String name;
   final int balance;
   final String locationid;
+  final String city;
 
-  UserModel(
-      {required this.id,
-      required this.email,
-      required this.name,
-      required this.balance,
-      required this.locationid});
+  UserModel({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.balance,
+    required this.locationid,
+    required this.city,
+  });
 
   Map<String, dynamic> toJson() {
     return {
@@ -19,6 +22,7 @@ class UserModel {
       "name": name,
       "balance": balance,
       "locationid": locationid,
+      "city": city
     };
   }
 
@@ -29,6 +33,7 @@ class UserModel {
       name: json['name'],
       balance: json['balance'],
       locationid: json['locationid'],
+      city: json['city'],
     );
   }
 }

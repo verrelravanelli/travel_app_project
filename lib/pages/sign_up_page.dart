@@ -131,6 +131,7 @@ class SignUpPage extends StatelessWidget {
                         password: passwordController.text,
                         name: nameController.text,
                         locationid: tempDataAPI[0].wikiDataId,
+                        city: tempDataAPI[0].city,
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(

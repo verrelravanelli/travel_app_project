@@ -15,8 +15,8 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   final TextEditingController topup = TextEditingController();
   late User user;
-  late UserModel loggedUser =
-      UserModel(id: "", email: "", name: "", balance: 0, locationid: "");
+  late UserModel loggedUser = UserModel(
+      id: "", email: "", name: "", balance: 0, locationid: "", city: "");
 
   @override
   void initState() {
@@ -34,11 +34,13 @@ class _WalletPageState extends State<WalletPage> {
   void topUpBalance() async {
     var tempBalance = loggedUser.balance + int.parse(topup.text);
     UserModel dtUser = UserModel(
-        id: loggedUser.id,
-        email: loggedUser.email,
-        name: loggedUser.name,
-        balance: tempBalance,
-        locationid: loggedUser.locationid);
+      id: loggedUser.id,
+      email: loggedUser.email,
+      name: loggedUser.name,
+      balance: tempBalance,
+      locationid: loggedUser.locationid,
+      city: loggedUser.city,
+    );
     await UserService().topUpWallet(user: dtUser);
   }
 

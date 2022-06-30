@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
 
 import '../models/DestinationModel.dart';
 import '../theme.dart';
@@ -11,9 +12,8 @@ import 'choose_seat_page.dart';
 
 class DetailPage extends StatelessWidget {
   final DestinationModel destinations;
-  DetailPage(this.destinations, {Key? key}) : super(key: key);
-
-  final TextEditingController fromCity = TextEditingController();
+  final UserModel currentUser;
+  DetailPage(this.destinations, this.currentUser, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -157,22 +157,31 @@ class DetailPage extends StatelessWidget {
                     height: 20,
                   ),
                   // Note : From City - To City
-                  Text(
-                    'From City',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: defaultMargin,
-                  ),
-                  TextField(
-                    controller: fromCity,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Input Kota Anda",
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'From City : ',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        child: Text(
+                          currentUser.city,
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(style: BorderStyle.solid),
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: defaultMargin,
@@ -247,20 +256,15 @@ class DetailPage extends StatelessWidget {
                   CustomButton(
                     buttonText: 'Book Now',
                     onPressed: () {
-                      if (fromCity.text != "") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChooseSeatPage(
-                                destinasi: destinations,
-                                fromCityUser: fromCity.text),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChooseSeatPage(
+                            destinasi: destinations,
+                            currentUser: currentUser,
                           ),
-                        );
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Input Kota Anda!",
-                            gravity: ToastGravity.CENTER);
-                      }
+                        ),
+                      );
                     },
                     widthButton: 170,
                   ),

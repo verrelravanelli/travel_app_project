@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/pages/detail_page.dart';
 
+import '../models/UserModel.dart';
 import '../theme.dart';
 
 class DestinationCard extends StatelessWidget {
   final DestinationModel destinations;
+  final UserModel currentUser;
   const DestinationCard(
-    this.destinations, {
+    this.destinations,
+    this.currentUser, {
     Key? key,
   }) : super(key: key);
 
@@ -20,7 +23,7 @@ class DestinationCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailPage(destinations),
+            builder: (context) => DetailPage(destinations, currentUser),
           ),
         );
       },

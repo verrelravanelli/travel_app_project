@@ -3,6 +3,8 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/controllers/pilih_seat_controller.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
+import 'package:proyek_ambw_kel15/models/TransactionModel.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
 
 import '../theme.dart';
 import '../widget/custom_button.dart';
@@ -13,10 +15,12 @@ import 'package:get/get.dart';
 
 class ChooseSeatPage extends GetView<PilihSeatController> {
   final DestinationModel destinasi;
-  final String fromCityUser;
-  const ChooseSeatPage(
-      {Key? key, required this.destinasi, required this.fromCityUser})
-      : super(key: key);
+  final UserModel currentUser;
+  const ChooseSeatPage({
+    Key? key,
+    required this.destinasi,
+    required this.currentUser,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -186,14 +190,23 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
         buttonText: 'Continue to Checkout',
         onPressed: () {
           int price = controller.userSelectedSeat.length * destinasi.price;
+          double temp = price + (price * 0.1);
+          int grandtotal = temp.round();
+          TransactionModel dtTransaksi = TransactionModel(
+            banyakTraveler: controller.userSelectedSeat.length,
+            destination: destinasi,
+            price: price,
+            tax: 10,
+            grandTotal: grandtotal,
+            selectedSeats: controller.userSelectedSeat.join(', '),
+          );
 
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => CheckoutPage(
-                dtDestinations: destinasi,
-                userFromCity: fromCityUser,
-                price: price,
+                currentUser: currentUser,
+                transaksi: dtTransaksi,
               ),
             ),
           );

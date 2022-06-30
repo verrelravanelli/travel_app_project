@@ -19,8 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late User user;
-  late UserModel loggedUser =
-      UserModel(id: "", email: "", name: "", balance: 0, locationid: "");
+  late UserModel loggedUser = UserModel(
+      id: "", email: "", name: "", balance: 0, locationid: "", city: "");
   @override
   void initState() {
     // TODO: implement initState
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     price: dsData['price'],
                     about: dsData['about'],
                   );
-                  return DestinationCard(destinationData);
+                  return DestinationCard(destinationData, loggedUser);
                 },
                 separatorBuilder: (context, index) => SizedBox(
                   width: 0,

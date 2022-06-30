@@ -34,6 +34,13 @@ class BookingDetailsItem extends StatelessWidget {
             //   ),
             // ),
           ),
+          Icon(
+            Icons.check_circle_outline,
+            color: kPrimaryColor,
+          ),
+          SizedBox(
+            width: 8,
+          ),
           Text(
             detailTitle,
             style: blackTextStyle,

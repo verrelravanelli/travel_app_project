@@ -16,14 +16,14 @@ class SuccessCheckoutPage extends StatelessWidget {
           children: [
             Container(
               margin: EdgeInsets.only(
-                bottom: 80,
+                bottom: 40,
               ),
               width: 300,
               height: 150,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/image_success.png',
+                    'assets/icon_success.png',
                   ),
                 ),
               ),
@@ -48,7 +48,10 @@ class SuccessCheckoutPage extends StatelessWidget {
             ),
             CustomButton(
               buttonText: 'My Bookings',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/main', (route) => false);
+              },
               widthButton: 220,
               margin: EdgeInsets.only(
                 top: 50,
