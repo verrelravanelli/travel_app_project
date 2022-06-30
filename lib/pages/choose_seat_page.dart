@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/controllers/pilih_seat_controller.dart';
@@ -189,27 +190,31 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
       return CustomButton(
         buttonText: 'Continue to Checkout',
         onPressed: () {
-          int price = controller.userSelectedSeat.length * destinasi.price;
-          double temp = price + (price * 0.1);
-          int grandtotal = temp.round();
-          TransactionModel dtTransaksi = TransactionModel(
-            banyakTraveler: controller.userSelectedSeat.length,
-            destination: destinasi,
-            price: price,
-            tax: 10,
-            grandTotal: grandtotal,
-            selectedSeats: controller.userSelectedSeat.join(', '),
-          );
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CheckoutPage(
-                currentUser: currentUser,
-                transaksi: dtTransaksi,
+          if (controller.userSelectedSeat.isNotEmpty) {
+            int price = controller.userSelectedSeat.length * destinasi.price;
+            double temp = price + (price * 0.1);
+            int grandtotal = temp.round();
+            TransactionModel dtTransaksi = TransactionModel(
+              banyakTraveler: controller.userSelectedSeat.length,
+              destination: destinasi,
+              price: price,
+              tax: 10,
+              grandTotal: grandtotal,
+              selectedSeats: controller.userSelectedSeat.join(', '),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutPage(
+                  currentUser: currentUser,
+                  transaksi: dtTransaksi,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            Fluttertoast.showToast(
+                msg: "Pilih Kursi!", gravity: ToastGravity.CENTER);
+          }
         },
         margin: EdgeInsets.only(
           top: 30,

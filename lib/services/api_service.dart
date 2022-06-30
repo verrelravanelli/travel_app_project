@@ -33,7 +33,7 @@ class APISerivce {
           list.map<APIModel>((json) => APIModel.fromJson(json)).toList();
 
       for (var i = 0; i < 1; i++) {
-        print(getAllData[i].wikiDataId);
+        print("WikiDataID Kota Destinasi : " + getAllData[i].wikiDataId);
       }
       return getAllData;
     } else {
@@ -63,4 +63,21 @@ class APISerivce {
   //     throw response.statusCode;
   //   }
   // }
+
+  Future<double> getDistanceBetweenCity({
+    required String endpoint,
+    required Map<String, String> query,
+  }) async {
+    Uri uri = Uri.https(_baseUrl, endpoint, query);
+    final response = await http.get(uri, headers: _headers);
+    if (response.statusCode == 200) {
+      // If server returns an OK response, parse the JSON.
+      final data = json.decode(response.body);
+      final list = data['data'];
+      return list;
+    } else {
+      print("EROR");
+      throw response.statusCode;
+    }
+  }
 }

@@ -4,6 +4,13 @@ class PilihSeatController extends GetxController {
   var indexKursi = 0.obs;
   var userSelectedSeat = [].obs;
 
+  void resetSeat() {
+    for (var i = 0; i < 20; i++) {
+      seat[0][i].update("status", (value) => "available");
+    }
+    userSelectedSeat.clear();
+  }
+
   void SelectSeat(int indexKursiTerpilih) {
     if (seat[0][indexKursiTerpilih]["status"] == "available") {
       seat[0][indexKursiTerpilih].update("status", (value) => "selected");

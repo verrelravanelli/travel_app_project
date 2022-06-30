@@ -1,9 +1,11 @@
 // import 'package:airplane/models/destination_model.dart';
 // import 'package:airplane/ui/pages/detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/pages/detail_page.dart';
 
+import '../controllers/api_distance_controller.dart';
 import '../models/UserModel.dart';
 import '../theme.dart';
 
@@ -18,8 +20,13 @@ class DestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final APIDistanceController controller = Get.put(APIDistanceController());
+
     return GestureDetector(
       onTap: () {
+        controller.destinationcity = destinations.city;
+        controller.destinationid = destinations.id;
+        controller.ambilDataAPI();
         Navigator.push(
           context,
           MaterialPageRoute(

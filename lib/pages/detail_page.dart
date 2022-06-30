@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 
+import '../controllers/api_distance_controller.dart';
+import '../controllers/pilih_seat_controller.dart';
+import '../models/APIModel.dart';
 import '../models/DestinationModel.dart';
+import '../services/api_service.dart';
 import '../theme.dart';
 import '../widget/custom_button.dart';
 import '../widget/interest_item_detail_page.dart';
@@ -17,6 +22,9 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PilihSeatController controller = Get.put(PilihSeatController());
+    final APIDistanceController controllerAPI =
+        Get.put(APIDistanceController());
     Widget backgroundImage() {
       return Container(
         width: double.infinity,
@@ -256,6 +264,8 @@ class DetailPage extends StatelessWidget {
                   CustomButton(
                     buttonText: 'Book Now',
                     onPressed: () {
+                      controller.resetSeat();
+                      controllerAPI.ambilDataAPIDistance();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

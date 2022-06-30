@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:proyek_ambw_kel15/controllers/pilih_seat_controller.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/models/TransactionModel.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 import 'package:proyek_ambw_kel15/services/transaction_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
 
+import '../controllers/api_distance_controller.dart';
 import '../theme.dart';
 import '../widget/booking_details_item.dart';
 import '../widget/custom_button.dart';
@@ -22,6 +26,10 @@ class CheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PilihSeatController controller = Get.put(PilihSeatController());
+    final APIDistanceController controllerAPI =
+        Get.put(APIDistanceController());
+
     Widget route() {
       return Container(
         margin: EdgeInsets.only(
@@ -61,6 +69,13 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     )
                   ],
+                ),
+                Text(
+                  controllerAPI.distance.toString() + " KM",
+                  style: blackTextStyle.copyWith(
+                    fontSize: 24,
+                    fontWeight: bold,
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -340,6 +355,7 @@ class CheckoutPage extends StatelessWidget {
             Fluttertoast.showToast(
                 msg: "Saldo Tidak Cukup!", gravity: ToastGravity.CENTER);
           } else {
+            controller.resetSeat();
             TransactionService().tambahData(
               user: currentUser,
               transaksi: transaksi,

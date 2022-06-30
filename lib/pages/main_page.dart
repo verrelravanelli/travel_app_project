@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:proyek_ambw_kel15/controllers/api_distance_controller.dart';
 import 'package:proyek_ambw_kel15/pages/setting_page.dart';
 import 'package:proyek_ambw_kel15/pages/transaction_page.dart';
 import 'package:proyek_ambw_kel15/pages/wallet_page.dart';

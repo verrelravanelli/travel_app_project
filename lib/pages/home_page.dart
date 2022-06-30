@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import 'package:proyek_ambw_kel15/services/destination_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
 
+import '../controllers/api_distance_controller.dart';
 import '../theme.dart';
 import '../widget/destination_card.dart';
 
@@ -18,6 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final APIDistanceController controller = Get.put(APIDistanceController());
   late User user;
   late UserModel loggedUser = UserModel(
       id: "", email: "", name: "", balance: 0, locationid: "", city: "");
@@ -35,6 +38,8 @@ class _HomePageState extends State<HomePage> {
     // KARNA KALO BOTTOM NAVBAR NYA DI PENCET KENCANG BETUL ERROR SET STATENYA LA BANG
     loggedUser = await UserService().getUserByID(user.uid);
     setState(() {});
+    controller.userlocationid = loggedUser.locationid;
+    controller.userCity = loggedUser.city;
   }
 
   @override
