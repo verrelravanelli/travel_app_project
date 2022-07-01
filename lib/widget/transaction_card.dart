@@ -1,11 +1,16 @@
 // import 'package:airplane/models/transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:proyek_ambw_kel15/models/TransactionModel.dart';
 // import 'package:intl/intl.dart';
 
 import '../theme.dart';
 import 'booking_details_item.dart';
 
 class TransactionCard extends StatelessWidget {
+  final TransactionModel transaksi;
+  const TransactionCard({Key? key, required this.transaksi}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +40,7 @@ class TransactionCard extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+                      transaksi.destination.imageUrl,
                     ),
                   ),
                 ),
@@ -45,7 +50,7 @@ class TransactionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Paris, France',
+                      transaksi.destination.name,
                       style: blackTextStyle.copyWith(
                         fontSize: 18,
                         fontWeight: medium,
@@ -55,7 +60,7 @@ class TransactionCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      '3 nights',
+                      transaksi.destination.city,
                       style: greyTextStyle.copyWith(
                         fontWeight: light,
                       ),
@@ -82,7 +87,7 @@ class TransactionCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '4.9',
+                    transaksi.destination.rating.toString(),
                     style: blackTextStyle.copyWith(
                       fontWeight: medium,
                     ),
@@ -107,37 +112,35 @@ class TransactionCard extends StatelessWidget {
           // Note : Booking Details Item
           BookingDetailsItem(
             detailTitle: 'Traveler',
-            valueText: '2',
+            valueText: '${transaksi.banyakTraveler} person',
             valueColor: kBlackColor,
           ),
           BookingDetailsItem(
             detailTitle: 'Seat',
-            valueText: '2',
-            valueColor: kBlackColor,
-          ),
-          BookingDetailsItem(
-            detailTitle: 'Insurance',
-            valueText: 'Yes',
-            valueColor: kBlackColor,
-          ),
-          BookingDetailsItem(
-            detailTitle: 'Refundable',
-            valueText: 'Yes',
-            valueColor: kBlackColor,
-          ),
-          BookingDetailsItem(
-            detailTitle: 'VAT',
-            valueText: 'Yes',
+            valueText: transaksi.selectedSeats,
             valueColor: kBlackColor,
           ),
           BookingDetailsItem(
             detailTitle: 'Price',
-            valueText: '\$1,000',
+            valueText: NumberFormat.currency(
+              locale: 'id',
+              symbol: 'IDR ',
+              decimalDigits: 0,
+            ).format(transaksi.price),
+            valueColor: kBlackColor,
+          ),
+          BookingDetailsItem(
+            detailTitle: 'Tax',
+            valueText: "${transaksi.tax}%",
             valueColor: kBlackColor,
           ),
           BookingDetailsItem(
             detailTitle: 'Grand Total',
-            valueText: '\$1,000',
+            valueText: NumberFormat.currency(
+              locale: 'id',
+              symbol: 'IDR ',
+              decimalDigits: 0,
+            ).format(transaksi.grandTotal),
             valueColor: kPrimaryColor,
           ),
         ],

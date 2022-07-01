@@ -8,9 +8,11 @@ class APIDistanceController extends GetxController {
   var destinationid = "";
   var destinationcity = "";
   var userCity = "";
+  var kotabaru = "";
   double distance = 0.0;
 
   List<APIModel> tempDataAPI = [];
+  List<APIModel> tempDataAPIEditProfile = [];
 
   void ambilDataAPIDistance() async {
     APISerivce apiService = APISerivce();
@@ -41,5 +43,21 @@ class APIDistanceController extends GetxController {
       },
     );
     tempDataAPI = await cityID;
+  }
+
+  void ambilDataAPIEditProfile() async {
+    print("Kota Baru EditProfile : $kotabaru");
+    APISerivce apiService = APISerivce();
+    Future<List<APIModel>> cityID;
+    cityID = apiService.get(
+      endpoint: '/v1/geo/cities',
+      query: {
+        "limit": "${1}",
+        "countryIds": "ID",
+        "namePrefix": kotabaru,
+        "types": "CITY",
+      },
+    );
+    tempDataAPIEditProfile = await cityID;
   }
 }

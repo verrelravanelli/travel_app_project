@@ -83,23 +83,6 @@ class _WalletPageState extends State<WalletPage> {
                     ],
                   ),
                 ),
-                // Container(
-                //   width: 24,
-                //   height: 24,
-                //   margin: const EdgeInsets.only(right: 6),
-                //   decoration: const BoxDecoration(
-                //     image: DecorationImage(
-                //       image: AssetImage('assets/icon_plane.png'),
-                //     ),
-                //   ),
-                // ),
-                // // Text(
-                // //   'Pay',
-                // //   style: whiteTextStyle.copyWith(
-                // //     fontSize: 16,
-                // //     fontWeight: medium,
-                // //   ),
-                // // ),
                 InkWell(
                   onTap: () {
                     topup.text = "";

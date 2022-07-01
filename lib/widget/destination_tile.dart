@@ -1,18 +1,38 @@
 // import 'package:airplane/models/destination_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
+import 'package:proyek_ambw_kel15/models/UserModel.dart';
+import '../controllers/api_distance_controller.dart';
+import '../pages/detail_page.dart';
 import '../theme.dart';
 
 // import '../detail_page.dart';
 
 class DestinationTile extends StatelessWidget {
-  const DestinationTile({
+  final DestinationModel destinations;
+  final UserModel currentUser;
+  const DestinationTile(
+    this.destinations,
+    this.currentUser, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final APIDistanceController controller = Get.put(APIDistanceController());
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.destinationcity = destinations.city;
+        controller.destinationid = destinations.id;
+        controller.ambilDataAPI();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(destinations, currentUser),
+          ),
+        );
+      },
       child: Container(
         margin: EdgeInsets.only(
           top: 16,
@@ -32,9 +52,7 @@ class DestinationTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-                  ),
+                  image: NetworkImage(destinations.imageUrl),
                 ),
               ),
             ),
@@ -43,7 +61,7 @@ class DestinationTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Paris, France',
+                    destinations.name,
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: medium,
@@ -53,7 +71,7 @@ class DestinationTile extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    '3 nights',
+                    destinations.city,
                     style: greyTextStyle.copyWith(
                       fontWeight: light,
                     ),
@@ -80,7 +98,7 @@ class DestinationTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '4.5',
+                  destinations.rating.toString(),
                   style: blackTextStyle.copyWith(
                     fontWeight: medium,
                   ),

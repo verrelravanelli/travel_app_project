@@ -49,4 +49,17 @@ class UserService {
         .whenComplete(() => print("Data Berhasil di Update"))
         .catchError((e) => print(e.toString()));
   }
+
+  Future<void> editProfile({required UserModel user}) async {
+    DocumentReference docRef = collectionRef.doc(user.id);
+
+    await docRef
+        .update({
+          "city": user.city,
+          "name": user.name,
+          "locationid": user.locationid
+        })
+        .whenComplete(() => print("Data Berhasil di Update"))
+        .catchError((e) => print(e.toString()));
+  }
 }

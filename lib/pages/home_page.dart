@@ -7,6 +7,7 @@ import 'package:proyek_ambw_kel15/models/UserModel.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import 'package:proyek_ambw_kel15/services/destination_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
+import 'package:proyek_ambw_kel15/widget/destination_tile.dart';
 
 import '../controllers/api_distance_controller.dart';
 import '../theme.dart';
@@ -132,7 +133,6 @@ class _HomePageState extends State<HomePage> {
           top: 15,
           left: defaultMargin,
           right: defaultMargin,
-          bottom: 90,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,30 +144,52 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: semiBold,
               ),
             ),
-            // Column(
-            //   children: [
-            //     DestinationCard(
-            //       title: 'Paris',
-            //       subtitle: 'France',
-            //       image: 'assets/foto_paris.jpg',
-            //     ),
-            //     DestinationCard(
-            //       title: 'Rome',
-            //       subtitle: 'Italy',
-            //       image: 'assets/foto_paris.jpg',
-            //     ),
-            //     DestinationCard(
-            //       title: 'Berlin',
-            //       subtitle: 'Germany',
-            //       image: 'assets/foto_paris.jpg',
-            //     ),
-            //     DestinationCard(
-            //       title: 'Madrid',
-            //       subtitle: 'Spain',
-            //       image: 'assets/foto_paris.jpg',
-            //     ),
-            //   ],
-            // ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 10,
+                  ),
+                  height: 350,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream:
+                        DestinationService.fetchDataDestinationsNewThisYear(),
+                    builder: (context, snapshots) {
+                      if (snapshots.hasError) {
+                        return Text("ERROR");
+                      } else if (snapshots.hasData || snapshots.data != null) {
+                        return ListView.separated(
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot dsData =
+                                snapshots.data!.docs[index];
+                            DestinationModel destinationData = DestinationModel(
+                              id: dsData['id'],
+                              name: dsData['name'],
+                              city: dsData['city'],
+                              imageUrl: dsData['imageUrl'],
+                              rating: double.parse(dsData['rating'].toString()),
+                              price: dsData['price'],
+                              about: dsData['about'],
+                            );
+                            return DestinationTile(destinationData, loggedUser);
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 0,
+                          ),
+                          itemCount: snapshots.data!.docs.length,
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       );
