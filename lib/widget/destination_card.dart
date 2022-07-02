@@ -121,6 +121,7 @@ class DestinationCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: medium,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
                     height: 5,

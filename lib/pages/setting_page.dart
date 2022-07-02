@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:proyek_ambw_kel15/pages/home_page.dart';
+import 'package:proyek_ambw_kel15/pages/page_admin.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import '../controllers/api_distance_controller.dart';
 import '../models/UserModel.dart';
@@ -20,10 +22,13 @@ class _SettingPageState extends State<SettingPage> {
   final APIDistanceController controller = Get.put(APIDistanceController());
   final TextEditingController nama = TextEditingController();
   final TextEditingController city = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   late User user;
   late UserModel loggedUser = UserModel(
       id: "", email: "", name: "", balance: 0, locationid: "", city: "");
+
+  var pwadmin = "1234";
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +61,7 @@ class _SettingPageState extends State<SettingPage> {
         child: Column(
           children: [
             SizedBox(
-              height: 40,
+              height: 10,
             ),
             Center(
               child: Container(
@@ -177,7 +182,7 @@ class _SettingPageState extends State<SettingPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Text(
                       'City',
@@ -198,7 +203,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             Center(
               child: CustomButton(
@@ -207,6 +212,62 @@ class _SettingPageState extends State<SettingPage> {
                   AuthService.signOut();
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/sign-in', (route) => false);
+                },
+                widthButton: 220,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: CustomButton(
+                buttonText: 'Admin',
+                onPressed: () {
+                  showDialog(
+                    useSafeArea: true,
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      backgroundColor: kBackgroundColor,
+                      title: Text("Input Password"),
+                      content: Container(
+                        height: 75,
+                        child: Column(
+                          children: [
+                            TextField(
+                              obscureText: true,
+                              controller: password,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Input Password",
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("CANCEL"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (password.text == pwadmin) {
+                              print("masuk");
+                              Navigator.pushNamed(context, '/page-admin');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Password Salah!",
+                                  gravity: ToastGravity.CENTER);
+                            }
+                            //Navigator.pop(context);
+                          },
+                          child: Text("OK"),
+                        ),
+                      ],
+                    ),
+                  );
                 },
                 widthButton: 220,
               ),

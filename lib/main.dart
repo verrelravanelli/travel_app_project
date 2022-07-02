@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyek_ambw_kel15/pages/bonus_page.dart';
 import 'package:proyek_ambw_kel15/pages/get_started_page.dart';
 import 'package:proyek_ambw_kel15/pages/main_page.dart';
+import 'package:proyek_ambw_kel15/pages/page_admin.dart';
 import 'package:proyek_ambw_kel15/pages/sign_in_page.dart';
 import 'package:proyek_ambw_kel15/pages/sign_up_page.dart';
 import 'package:proyek_ambw_kel15/pages/splash_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/bonus': (context) => const BonusPage(),
         '/main': (context) => const MainPage(),
         '/success': (context) => SuccessCheckoutPage(),
+        '/page-admin': (context) => PageAdmin(),
       },
     );
   }
