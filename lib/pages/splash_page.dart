@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
                 ),
               ),
             ),
-            Text('AIRPLANE',
+            Text('Travel App',
                 style: whiteTextStyle.copyWith(
                   fontSize: 32,
                   fontWeight: medium,
