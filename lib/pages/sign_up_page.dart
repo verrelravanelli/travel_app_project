@@ -6,7 +6,6 @@ import 'package:proyek_ambw_kel15/services/user_service.dart';
 import '../theme.dart';
 import '../widget/custom_text_form_field.dart';
 
-// ******** BELOM ADA VALID EMAIL CHECKER!
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
 
@@ -131,7 +130,7 @@ class SignUpPage extends StatelessWidget {
                         password: passwordController.text,
                         name: nameController.text,
                         locationid: tempDataAPI[0].wikiDataId,
-                        city: tempDataAPI[0].city,
+                        city: locationController.text,
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(
