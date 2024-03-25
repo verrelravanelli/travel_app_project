@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:proyek_ambw_kel15/pages/home_page.dart';
-import 'package:proyek_ambw_kel15/pages/page_admin.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import '../controllers/api_distance_controller.dart';
 import '../models/UserModel.dart';
@@ -23,22 +21,18 @@ class _SettingPageState extends State<SettingPage> {
   final TextEditingController nama = TextEditingController();
   final TextEditingController city = TextEditingController();
   final TextEditingController password = TextEditingController();
-
-  late User user;
-  late UserModel loggedUser = UserModel(
-      id: "", email: "", name: "", balance: 0, locationid: "", city: "");
+  late UserModel loggedUser = UserModel(id: "", email: "", name: "", balance: 0, locationid: "", city: "");
 
   var pwadmin = "1234";
   @override
   void initState() {
     // TODO: implement initState
-    user = FirebaseAuth.instance.currentUser!;
     getCurrentUser();
     super.initState();
   }
 
   void getCurrentUser() async {
-    loggedUser = await UserService().getUserByID(user.uid);
+    loggedUser = await UserService().getUserByID(FirebaseAuth.instance.currentUser!.uid);
     setState(() {});
   }
 
@@ -60,7 +54,7 @@ class _SettingPageState extends State<SettingPage> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Center(
@@ -101,12 +95,9 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 3.0,
-                                style: BorderStyle.solid,
-                                color: Colors.white),
+                            border: Border.all(width: 3.0, style: BorderStyle.solid, color: Colors.white),
                           ),
                           child: InkWell(
                             onTap: () {
@@ -117,24 +108,24 @@ class _SettingPageState extends State<SettingPage> {
                                 context: context,
                                 builder: (context) => AlertDialog(
                                   backgroundColor: kBackgroundColor,
-                                  title: Text("Edit Profile"),
+                                  title: const Text("Edit Profile"),
                                   content: Container(
                                     height: 150,
                                     child: Column(
                                       children: [
                                         TextField(
                                           controller: nama,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: "Edit Nama",
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         TextField(
                                           controller: city,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: "Edit City",
                                           ),
@@ -147,7 +138,7 @@ class _SettingPageState extends State<SettingPage> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text("CANCEL"),
+                                      child: const Text("CANCEL"),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -155,24 +146,23 @@ class _SettingPageState extends State<SettingPage> {
                                         setState(() {
                                           controller.ambilDataAPIEditProfile();
                                           Future.delayed(
-                                            Duration(seconds: 2),
+                                            const Duration(seconds: 2),
                                             () {
                                               updateProfile();
-                                              Fluttertoast.showToast(
-                                                  msg: "Berhasil Edit Profile");
+                                              Fluttertoast.showToast(msg: "Berhasil Edit Profile");
                                               getCurrentUser();
                                             },
                                           );
                                         });
                                         Navigator.pop(context);
                                       },
-                                      child: Text("OK"),
+                                      child: const Text("OK"),
                                     ),
                                   ],
                                 ),
                               );
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.mode_edit_outlined,
                               color: Colors.white,
                               size: 32,
@@ -181,7 +171,7 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
@@ -202,7 +192,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
@@ -210,13 +200,12 @@ class _SettingPageState extends State<SettingPage> {
                 buttonText: 'Sign Out',
                 onPressed: () {
                   AuthService.signOut();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/sign-in', (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context, '/sign-in', (route) => false);
                 },
                 widthButton: 220,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
@@ -228,7 +217,7 @@ class _SettingPageState extends State<SettingPage> {
                     context: context,
                     builder: (context) => AlertDialog(
                       backgroundColor: kBackgroundColor,
-                      title: Text("Input Password"),
+                      title: const Text("Input Password"),
                       content: Container(
                         height: 75,
                         child: Column(
@@ -236,7 +225,7 @@ class _SettingPageState extends State<SettingPage> {
                             TextField(
                               obscureText: true,
                               controller: password,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "Input Password",
                               ),
@@ -249,7 +238,7 @@ class _SettingPageState extends State<SettingPage> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("CANCEL"),
+                          child: const Text("CANCEL"),
                         ),
                         TextButton(
                           onPressed: () {
@@ -257,13 +246,11 @@ class _SettingPageState extends State<SettingPage> {
                               print("masuk");
                               Navigator.pushNamed(context, '/page-admin');
                             } else {
-                              Fluttertoast.showToast(
-                                  msg: "Password Salah!",
-                                  gravity: ToastGravity.CENTER);
+                              Fluttertoast.showToast(msg: "Password Salah!", gravity: ToastGravity.CENTER);
                             }
                             //Navigator.pop(context);
                           },
-                          child: Text("OK"),
+                          child: const Text("OK"),
                         ),
                       ],
                     ),

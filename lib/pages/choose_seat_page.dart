@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/controllers/pilih_seat_controller.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
@@ -9,7 +8,6 @@ import 'package:proyek_ambw_kel15/models/UserModel.dart';
 
 import '../theme.dart';
 import '../widget/custom_button.dart';
-import '../widget/seat_item.dart';
 import '../widget/seat_status_widget.dart';
 import 'checkout_page.dart';
 import 'package:get/get.dart';
@@ -29,7 +27,7 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
 
     Widget title() {
       return Container(
-        margin: EdgeInsets.only(top: 40),
+        margin: const EdgeInsets.only(top: 40),
         child: Text(
           'Select Your\nFavorite Seat',
           style: blackTextStyle.copyWith(
@@ -42,20 +40,20 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
 
     Widget seatStatus() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 15,
         ),
-        child: SeatStatusWidget(),
+        child: const SeatStatusWidget(),
       );
     }
 
     Widget selectSeat() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 20,
         ),
         width: double.infinity,
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 22,
           vertical: 30,
         ),
@@ -66,30 +64,26 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
         child: Column(
           children: [
             // Note : Seat Indicator
-            Container(
+            SizedBox(
               height: 280,
               child: Obx(
                 () => GridView.builder(
-                  padding: EdgeInsets.all(4),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  padding: const EdgeInsets.all(4),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 5,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
-                  itemCount:
-                      controller.seat[controller.indexKursi.value].length,
+                  itemCount: controller.seat[controller.indexKursi.value].length,
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => controller.SelectSeat(index),
                     child: Container(
                       child: Center(
                         child: Text(
-                          controller.seat[controller.indexKursi.value][index]
-                              ["id"],
+                          controller.seat[controller.indexKursi.value][index]["id"],
                           style: TextStyle(
                             fontWeight: bold,
-                            color: controller.seat[controller.indexKursi.value]
-                                        [index]["status"] ==
-                                    "selected"
+                            color: controller.seat[controller.indexKursi.value][index]["status"] == "selected"
                                 ? kWhiteColor
                                 : kBlackColor,
                           ),
@@ -101,13 +95,9 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
                         border: Border.all(
                           color: kPrimaryColor,
                         ),
-                        color: controller.seat[controller.indexKursi.value]
-                                    [index]["status"] ==
-                                "available"
+                        color: controller.seat[controller.indexKursi.value][index]["status"] == "available"
                             ? Colors.grey[300]
-                            : controller.seat[controller.indexKursi.value]
-                                        [index]["status"] ==
-                                    "selected"
+                            : controller.seat[controller.indexKursi.value][index]["status"] == "selected"
                                 ? kPrimaryColor
                                 : kGreyColor,
                         borderRadius: BorderRadius.circular(10),
@@ -120,7 +110,7 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
 
             // Note : YOUR SEAT
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 15,
               ),
               child: Row(
@@ -151,7 +141,7 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
 
             // Note : Total
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 16,
               ),
               child: Row(
@@ -212,11 +202,10 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
               ),
             );
           } else {
-            Fluttertoast.showToast(
-                msg: "Pilih Kursi!", gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "Pilih Kursi!", gravity: ToastGravity.CENTER);
           }
         },
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
           bottom: 46,
         ),
@@ -226,9 +215,7 @@ class ChooseSeatPage extends GetView<PilihSeatController> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: ListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: defaultMargin, vertical: defaultMargin),
         children: [
           title(),
           seatStatus(),

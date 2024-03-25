@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
-import 'package:proyek_ambw_kel15/services/auth_service.dart';
 import 'package:proyek_ambw_kel15/services/destination_service.dart';
 import 'package:proyek_ambw_kel15/services/user_service.dart';
 import 'package:proyek_ambw_kel15/widget/destination_tile.dart';
@@ -22,22 +21,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final APIDistanceController controller = Get.put(APIDistanceController());
-  late User user;
-  late UserModel loggedUser = UserModel(
-      id: "", email: "", name: "", balance: 0, locationid: "", city: "");
+  late UserModel loggedUser = UserModel(id: "", email: "", name: "", balance: 0, locationid: "", city: "");
   @override
   void initState() {
     // TODO: implement initState
-    user = FirebaseAuth.instance.currentUser!;
     getCurrentUser();
     super.initState();
   }
 
   void getCurrentUser() async {
-    loggedUser = await UserService().getUserByID(user.uid);
-    setState(() {});
-    controller.userlocationid = loggedUser.locationid;
-    controller.userCity = loggedUser.city;
+    loggedUser = await UserService().getUserByID(FirebaseAuth.instance.currentUser!.uid);
+    setState(() {
+      controller.userlocationid = loggedUser.locationid;
+      controller.userCity = loggedUser.city;
+    });
   }
 
   @override
@@ -63,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text(
@@ -83,7 +80,7 @@ class _HomePageState extends State<HomePage> {
 
     Widget popularDestinations() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 10,
         ),
         height: 323,
@@ -91,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           stream: DestinationService.fetchDataDestinations(),
           builder: (context, snapshots) {
             if (snapshots.hasError) {
-              return Text("ERROR");
+              return const Text("ERROR");
             } else if (snapshots.hasData || snapshots.data != null) {
               return ListView.separated(
                 scrollDirection: Axis.horizontal,
@@ -108,13 +105,13 @@ class _HomePageState extends State<HomePage> {
                   );
                   return DestinationCard(destinationData, loggedUser);
                 },
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                   width: 0,
                 ),
                 itemCount: snapshots.data!.docs.length,
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
               ),
@@ -144,21 +141,21 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     top: 10,
                   ),
                   height: 350,
                   child: StreamBuilder<QuerySnapshot>(
-                    stream:
-                        DestinationService.fetchDataDestinationsNewThisYear(),
+                    stream: DestinationService.fetchDataDestinationsNewThisYear(),
                     builder: (context, snapshots) {
                       if (snapshots.hasError) {
-                        return Text("ERROR");
+                        return const Text("ERROR");
                       } else if (snapshots.hasData || snapshots.data != null) {
                         return ListView.separated(
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
                           itemBuilder: (context, index) {
-                            DocumentSnapshot dsData =
-                                snapshots.data!.docs[index];
+                            DocumentSnapshot dsData = snapshots.data!.docs[index];
                             DestinationModel destinationData = DestinationModel(
                               id: dsData['id'],
                               name: dsData['name'],
@@ -170,16 +167,15 @@ class _HomePageState extends State<HomePage> {
                             );
                             return DestinationTile(destinationData, loggedUser);
                           },
-                          separatorBuilder: (context, index) => SizedBox(
+                          separatorBuilder: (context, index) => const SizedBox(
                             width: 0,
                           ),
                           itemCount: snapshots.data!.docs.length,
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
                         ),
                       );
                     },

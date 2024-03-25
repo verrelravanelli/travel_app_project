@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/controllers/pilih_seat_controller.dart';
-import 'package:proyek_ambw_kel15/models/DestinationModel.dart';
 import 'package:proyek_ambw_kel15/models/TransactionModel.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 import 'package:proyek_ambw_kel15/services/transaction_service.dart';
@@ -27,23 +25,22 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PilihSeatController controller = Get.put(PilihSeatController());
-    final APIDistanceController controllerAPI =
-        Get.put(APIDistanceController());
+    final APIDistanceController controllerAPI = Get.put(APIDistanceController());
 
     Widget route() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 50,
         ),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 bottom: 10,
               ),
               width: 291,
               height: 65,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image_checkout.png'),
                 ),
@@ -104,10 +101,10 @@ class CheckoutPage extends StatelessWidget {
 
     Widget bookingDetails() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 30,
         ),
@@ -124,7 +121,7 @@ class CheckoutPage extends StatelessWidget {
                 Container(
                   width: 70,
                   height: 70,
-                  margin: EdgeInsets.only(right: 16),
+                  margin: const EdgeInsets.only(right: 16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     image: DecorationImage(
@@ -146,7 +143,7 @@ class CheckoutPage extends StatelessWidget {
                           fontWeight: medium,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -165,10 +162,10 @@ class CheckoutPage extends StatelessWidget {
                     Container(
                       width: 20,
                       height: 20,
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         right: 2,
                       ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
                             'assets/icon_star.png',
@@ -188,7 +185,7 @@ class CheckoutPage extends StatelessWidget {
             ),
             // Note : Booking details
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 20,
               ),
               child: Text(
@@ -240,10 +237,10 @@ class CheckoutPage extends StatelessWidget {
 
     Widget paymentDetails() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 30,
         ),
@@ -262,20 +259,20 @@ class CheckoutPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 16,
               ),
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       right: 16,
                     ),
                     width: 100,
                     height: 70,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: AssetImage(
                           'assets/image_card.png',
@@ -287,12 +284,12 @@ class CheckoutPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                               right: 6,
                             ),
                             width: 24,
                             height: 24,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'assets/icon_plane.png',
@@ -327,7 +324,7 @@ class CheckoutPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -352,8 +349,7 @@ class CheckoutPage extends StatelessWidget {
         buttonText: 'Pay Now',
         onPressed: () {
           if (currentUser.balance < transaksi.price) {
-            Fluttertoast.showToast(
-                msg: "Saldo Tidak Cukup!", gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "Saldo Tidak Cukup!", gravity: ToastGravity.CENTER);
           } else {
             controller.resetSeat();
             TransactionService().tambahData(
@@ -366,18 +362,16 @@ class CheckoutPage extends StatelessWidget {
               saldoAkhirUser: tempSaldoAkhir,
             );
 
-            Fluttertoast.showToast(
-                msg: "Success Checkout", gravity: ToastGravity.SNACKBAR);
+            Fluttertoast.showToast(msg: "Success Checkout", gravity: ToastGravity.SNACKBAR);
             Future.delayed(
-              Duration(seconds: 3),
+              const Duration(seconds: 3),
               () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/success', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(context, '/success', (route) => false);
               },
             );
           }
         },
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
         ),
       );
@@ -386,7 +380,7 @@ class CheckoutPage extends StatelessWidget {
     Widget tacButton() {
       return Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 30,
           bottom: 30,
         ),

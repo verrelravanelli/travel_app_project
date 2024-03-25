@@ -14,11 +14,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // TODO: implement initState
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/get-started', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/get-started', (route) => false);
       } else {
         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
       }
@@ -37,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
             Container(
               width: 100,
               height: 100,
-              margin: EdgeInsets.only(bottom: 50),
+              margin: const EdgeInsets.only(bottom: 50),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(

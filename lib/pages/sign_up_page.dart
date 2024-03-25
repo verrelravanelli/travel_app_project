@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyek_ambw_kel15/models/APIModel.dart';
 import 'package:proyek_ambw_kel15/services/api_service.dart';
 import 'package:proyek_ambw_kel15/services/auth_service.dart';
-import 'package:proyek_ambw_kel15/services/user_service.dart';
 import '../theme.dart';
 import '../widget/custom_text_form_field.dart';
 
@@ -11,17 +10,14 @@ class SignUpPage extends StatelessWidget {
 
   final TextEditingController nameController = TextEditingController(text: '');
   final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController passwordController =
-      TextEditingController(text: '');
-  final TextEditingController locationController =
-      TextEditingController(text: '');
+  final TextEditingController passwordController = TextEditingController(text: '');
+  final TextEditingController locationController = TextEditingController(text: '');
 
   List<APIModel> tempDataAPI = [];
 
-  void ambilDataAPI() async {
+  Future<void> ambilDataAPI() async {
     APISerivce apiService = APISerivce();
-    Future<List<APIModel>> asiap;
-    asiap = apiService.get(
+    List<APIModel> data = await apiService.get(
       endpoint: '/v1/geo/cities',
       query: {
         "limit": "${1}",
@@ -30,14 +26,14 @@ class SignUpPage extends StatelessWidget {
         "types": "CITY",
       },
     );
-    tempDataAPI = await asiap;
+    tempDataAPI = data;
   }
 
   @override
   Widget build(BuildContext context) {
     Widget title() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 20,
         ),
         child: Text(
@@ -86,83 +82,54 @@ class SignUpPage extends StatelessWidget {
 
       Widget submitButton() {
         return Container(
-          margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+          margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
           width: 200,
           height: 50,
           child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (emailController.text != "" &&
                     passwordController.text != "" &&
                     nameController.text != "" &&
                     locationController.text != "") {
                   //Panggil API Location Service
-                  ambilDataAPI();
-                  // APISerivce apiService = APISerivce();
-                  // Future<List<APIModel>> asiap;
-                  // asiap = apiService.get(
-                  //   endpoint: '/v1/geo/cities',
-                  //   query: {
-                  //     "limit": "${1}",
-                  //     "namePrefix": locationController.text,
-                  //     "types": "CITY",
-                  //   },
-                  // );
+                  await ambilDataAPI();
 
-                  // FutureBuilder<List<APIModel>>(
-                  //     future: asiap,
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         print("masuk");
-                  //         List<APIModel> dsData = snapshot.data!;
-                  //         print(dsData[0].wikiDataId);
-                  //         temp1 = dsData[0].wikiDataId;
-                  //         temp2 = dsData[0].city;
-                  //       }
-                  //       return SizedBox();
-                  //     });
+                  //Panggil Fungsi AuthService SignUp
+                  await AuthService.signUp(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    name: nameController.text,
+                    locationid: tempDataAPI[0].wikiDataId,
+                    city: locationController.text,
+                  );
 
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Account Created"),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
                   Future.delayed(
-                    Duration(seconds: 3),
+                    const Duration(seconds: 2),
                     () {
-                      //Panggil Fungsi AuthService SignUp
-                      AuthService.signUp(
-                        email: emailController.text,
-                        password: passwordController.text,
-                        name: nameController.text,
-                        locationid: tempDataAPI[0].wikiDataId,
-                        city: locationController.text,
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Account Created"),
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                      Future.delayed(
-                        Duration(seconds: 2),
-                        () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/main', (route) => false);
-                        },
-                      );
+                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                     },
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text("Isi informasi dengan lengkap!"),
                     ),
                   );
                 }
               },
-              child: Text('Sign Up')),
+              child: const Text('Sign Up')),
         );
       }
 
       return Container(
-        margin: EdgeInsets.only(top: 20),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        margin: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
           color: kWhiteColor,
           borderRadius: BorderRadius.circular(defaultRadius),
@@ -186,7 +153,7 @@ class SignUpPage extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             top: 20,
             bottom: 20,
           ),

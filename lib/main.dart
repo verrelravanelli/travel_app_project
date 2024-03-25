@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
         '/sign-in': (context) => SignInPage(),
         '/bonus': (context) => const BonusPage(),
         '/main': (context) => const MainPage(),
-        '/success': (context) => SuccessCheckoutPage(),
-        '/page-admin': (context) => PageAdmin(),
+        '/success': (context) => const SuccessCheckoutPage(),
+        '/page-admin': (context) => const PageAdmin(),
       },
     );
   }

@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:proyek_ambw_kel15/models/UserModel.dart';
 
 import '../controllers/api_distance_controller.dart';
 import '../controllers/pilih_seat_controller.dart';
-import '../models/APIModel.dart';
 import '../models/DestinationModel.dart';
-import '../services/api_service.dart';
 import '../theme.dart';
 import '../widget/custom_button.dart';
-import '../widget/interest_item_detail_page.dart';
-import '../widget/photo_item_detail_page.dart';
 import 'choose_seat_page.dart';
 
 class DetailPage extends StatelessWidget {
   final DestinationModel destinations;
   final UserModel currentUser;
-  DetailPage(this.destinations, this.currentUser, {Key? key}) : super(key: key);
+  const DetailPage(this.destinations, this.currentUser, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final PilihSeatController controller = Get.put(PilihSeatController());
-    final APIDistanceController controllerAPI =
-        Get.put(APIDistanceController());
+    final APIDistanceController controllerAPI = Get.put(APIDistanceController());
     Widget backgroundImage() {
       return Container(
         width: double.infinity,
@@ -40,7 +34,7 @@ class DetailPage extends StatelessWidget {
 
     Widget customShadow() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 236,
         ),
         width: double.infinity,
@@ -68,7 +62,7 @@ class DetailPage extends StatelessWidget {
           children: [
             // Note : Title
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 256,
               ),
               child: Row(
@@ -102,10 +96,10 @@ class DetailPage extends StatelessWidget {
                       Container(
                         width: 24,
                         height: 24,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           right: 4,
                         ),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
                               'assets/icon_star.png',
@@ -128,10 +122,10 @@ class DetailPage extends StatelessWidget {
             // Note : Description
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 30,
               ),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 30,
               ),
@@ -150,7 +144,7 @@ class DetailPage extends StatelessWidget {
                       fontWeight: semiBold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text(
@@ -161,7 +155,7 @@ class DetailPage extends StatelessWidget {
                     ),
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   // Note : From City - To City
@@ -175,7 +169,7 @@ class DetailPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         child: Text(
                           currentUser.city,
                           style: whiteTextStyle.copyWith(
@@ -204,7 +198,7 @@ class DetailPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         child: Text(
                           destinations.city,
                           style: whiteTextStyle.copyWith(
@@ -225,7 +219,7 @@ class DetailPage extends StatelessWidget {
             ),
             // Note : Price & Book Button
             Container(
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 vertical: 30,
               ),
               width: double.infinity,
@@ -249,7 +243,7 @@ class DetailPage extends StatelessWidget {
                             fontWeight: medium,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(

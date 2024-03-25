@@ -10,17 +10,13 @@ class SignInPage extends StatelessWidget {
   SignInPage({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController passwordController =
-      TextEditingController(text: '');
-
-  late UserModel tmpUser = UserModel(
-      id: "", email: "", name: "", balance: 0, locationid: "", city: "");
+  final TextEditingController passwordController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
     Widget title() {
       return Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 20,
         ),
         child: Text(
@@ -55,7 +51,7 @@ class SignInPage extends StatelessWidget {
         return CustomButton(
           buttonText: 'Sign In',
           widthButton: 220,
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             top: 20,
           ),
           onPressed: () {
@@ -65,8 +61,8 @@ class SignInPage extends StatelessWidget {
       }
 
       return Container(
-        margin: EdgeInsets.only(top: 20),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        margin: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
           color: kWhiteColor,
           borderRadius: BorderRadius.circular(defaultRadius),
@@ -88,7 +84,7 @@ class SignInPage extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             top: 50,
             bottom: 73,
           ),
@@ -129,8 +125,7 @@ class SignInPage extends StatelessWidget {
     } else if (passwordController.text == "") {
       Fluttertoast.showToast(msg: "Input Password!");
     } else {
-      tmpUser = await AuthService.signIn(
-          email: emailController.text, password: passwordController.text);
+      UserModel tmpUser = await AuthService.signIn(email: emailController.text, password: passwordController.text);
       if (tmpUser.id != "") {
         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
       }

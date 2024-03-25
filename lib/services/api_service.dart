@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:proyek_ambw_kel15/models/APIModel.dart';
@@ -17,7 +18,6 @@ class APISerivce {
     "x-Rapidapi-Key": _api_key,
   };
 
-  //Base API request to get response
   Future<List<APIModel>> get({
     required String endpoint,
     required Map<String, String> query,
@@ -25,19 +25,13 @@ class APISerivce {
     Uri uri = Uri.https(_baseUrl, endpoint, query);
     final response = await http.get(uri, headers: _headers);
     if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
       final data = json.decode(response.body);
       final list = data['data'];
 
-      List<APIModel> getAllData =
-          list.map<APIModel>((json) => APIModel.fromJson(json)).toList();
+      List<APIModel> getAllData = list.map<APIModel>((json) => APIModel.fromJson(json)).toList();
 
-      for (var i = 0; i < 1; i++) {
-        print("WikiDataID Kota Destinasi : " + getAllData[i].wikiDataId);
-      }
       return getAllData;
     } else {
-      print("EROR");
       throw response.statusCode;
     }
   }
@@ -71,12 +65,11 @@ class APISerivce {
     Uri uri = Uri.https(_baseUrl, endpoint, query);
     final response = await http.get(uri, headers: _headers);
     if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
       final data = json.decode(response.body);
+      log(data.toString());
       final list = data['data'];
       return list;
     } else {
-      print("EROR");
       throw response.statusCode;
     }
   }

@@ -18,7 +18,7 @@ class APIDistanceController extends GetxController {
     APISerivce apiService = APISerivce();
     Future<double> dtAPI;
     dtAPI = apiService.getDistanceBetweenCity(
-      endpoint: '/v1/geo/cities/${userlocationid}/distance',
+      endpoint: '/v1/geo/cities/$userlocationid/distance',
       query: {
         "distanceUnit": "KM",
         "toCityId": tempDataAPI[0].wikiDataId,
@@ -29,11 +29,8 @@ class APIDistanceController extends GetxController {
   }
 
   void ambilDataAPI() async {
-    print("Kota Destinasi : $destinationcity");
-    print("ID Kota Destinasi : $destinationid");
     APISerivce apiService = APISerivce();
-    Future<List<APIModel>> cityID;
-    cityID = apiService.get(
+    List<APIModel> cityID = await apiService.get(
       endpoint: '/v1/geo/cities',
       query: {
         "limit": "${1}",
@@ -42,14 +39,12 @@ class APIDistanceController extends GetxController {
         "types": "CITY",
       },
     );
-    tempDataAPI = await cityID;
+    tempDataAPI = cityID;
   }
 
   void ambilDataAPIEditProfile() async {
-    print("Kota Baru EditProfile : $kotabaru");
     APISerivce apiService = APISerivce();
-    Future<List<APIModel>> cityID;
-    cityID = apiService.get(
+    List<APIModel> cityID = await apiService.get(
       endpoint: '/v1/geo/cities',
       query: {
         "limit": "${1}",
@@ -58,6 +53,6 @@ class APIDistanceController extends GetxController {
         "types": "CITY",
       },
     );
-    tempDataAPIEditProfile = await cityID;
+    tempDataAPIEditProfile = cityID;
   }
 }

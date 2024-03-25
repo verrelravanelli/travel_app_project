@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:proyek_ambw_kel15/controllers/api_distance_controller.dart';
 import 'package:proyek_ambw_kel15/pages/setting_page.dart';
 import 'package:proyek_ambw_kel15/pages/transaction_page.dart';
 import 'package:proyek_ambw_kel15/pages/wallet_page.dart';
@@ -21,7 +19,6 @@ class _MainPageState extends State<MainPage> {
   void _changeSelectedNavBar(int index) {
     setState(() {
       _selectedNavbar = index;
-      print("Selected index : {$_selectedNavbar}");
     });
   }
 
@@ -30,15 +27,15 @@ class _MainPageState extends State<MainPage> {
     Widget buildContent(int currentIndex) {
       switch (currentIndex) {
         case 0:
-          return HomePage();
+          return const HomePage();
         case 1:
-          return TransactionPage();
+          return const TransactionPage();
         case 2:
-          return WalletPage();
+          return const WalletPage();
         case 3:
-          return SettingPage();
+          return const SettingPage();
         default:
-          return HomePage();
+          return const HomePage();
       }
     }
 
@@ -57,7 +54,7 @@ class _MainPageState extends State<MainPage> {
             color: kWhiteColor,
             borderRadius: BorderRadius.circular(defaultRadius),
           ),
-          child: Row(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CustomButtonNavigationItem(

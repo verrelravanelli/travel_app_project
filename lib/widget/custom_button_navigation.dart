@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
 
 class CustomButtonNavigationItem extends StatelessWidget {
   final int index;
@@ -18,26 +17,17 @@ class CustomButtonNavigationItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(),
+          const SizedBox(),
           Image.asset(
             imageUrl,
             width: 24,
             height: 24,
           ),
-          // Container(
-          //   width: 24,
-          //   height: 24,
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage(imageUrl),
-          //     ),
-          //   ),
-          // ),
           Container(
-            margin: EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(bottom: 5),
             width: 30,
             height: 2,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
           )
         ],
       ),

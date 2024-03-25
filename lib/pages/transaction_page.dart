@@ -7,9 +7,6 @@ import 'package:proyek_ambw_kel15/services/transaction_service.dart';
 import 'package:proyek_ambw_kel15/theme.dart';
 import 'package:proyek_ambw_kel15/widget/transaction_card.dart';
 
-import '../models/DestinationModel.dart';
-import '../widget/destination_card.dart';
-
 class TransactionPage extends StatefulWidget {
   const TransactionPage({Key? key}) : super(key: key);
 
@@ -33,7 +30,7 @@ class _TransactionPageState extends State<TransactionPage> {
       stream: TransactionService.fetchDataHistoryTransaction(user.uid),
       builder: (context, snapshots) {
         if (snapshots.hasError) {
-          return Text("ERROR");
+          return const Text("ERROR");
         } else if (snapshots.hasData || snapshots.data != null) {
           if (snapshots.data!.size == 0) {
             return Center(
@@ -55,13 +52,13 @@ class _TransactionPageState extends State<TransactionPage> {
                   selectedSeats: dsData['selectedSeats']);
               return TransactionCard(transaksi: dtTransaksi);
             },
-            separatorBuilder: (context, index) => SizedBox(
+            separatorBuilder: (context, index) => const SizedBox(
               width: 0,
             ),
             itemCount: snapshots.data!.docs.length,
           );
         }
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
           ),
