@@ -25,7 +25,6 @@ class APIDistanceController extends GetxController {
       },
     );
     distance = await dtAPI;
-    print("Distance : $distance");
   }
 
   void ambilDataAPI() async {

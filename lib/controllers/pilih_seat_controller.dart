@@ -17,12 +17,10 @@ class PilihSeatController extends GetxController {
       userSelectedSeat.add(seat[0][indexKursiTerpilih]["id"]);
       userSelectedSeat.refresh();
       List.from(userSelectedSeat);
-      print(userSelectedSeat);
     } else if (seat[0][indexKursiTerpilih]["status"] == "selected") {
       seat[0][indexKursiTerpilih].update("status", (value) => "available");
       userSelectedSeat.remove(seat[0][indexKursiTerpilih]["id"]);
       userSelectedSeat.refresh();
-      print(userSelectedSeat);
     }
     seat.refresh();
   }
